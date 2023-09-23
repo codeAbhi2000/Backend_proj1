@@ -8,6 +8,12 @@ body {
   background-color:rgb(17, 17, 17);
 }
 
+a{
+  text-decoration: none;
+  color: white;
+  text-align: center;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

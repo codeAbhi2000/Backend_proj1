@@ -11,13 +11,17 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import {Link ,useNavigate} from 'react-router-dom'
+import { useContext } from 'react';
+import UserContext from '../context/userContext';
 
 
 function Navbar() {
-    const pages = ['Products', 'Pricing', 'Blog'];
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+    const navigate = useNavigate()
+   
+    const user = useContext(UserContext)
 
+    console.log(user.user.id);
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -28,6 +32,12 @@ function Navbar() {
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
+
+    const logOutUser = ()=>{
+        setAnchorElUser(null);
+        user.update(false,'',null)
+        navigate('/')
+    }
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
@@ -41,23 +51,23 @@ function Navbar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                 
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                      
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'inherit',
+                            color: '#f5ad42',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        BudgetBuddy
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -89,14 +99,18 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                <Link to='/'><Typography textAlign="center">Home</Typography></Link>
                                 </MenuItem>
-                            ))}
+
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                <Link to='/login'><Typography textAlign="center">Login</Typography></Link>
+                                </MenuItem>
+                           
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    
                     <Typography
                         variant="h5"
                         noWrap
@@ -109,30 +123,35 @@ function Navbar() {
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'inherit',
+                            color: '#f5ad42',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        BudgetBuddy
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                       
                             <Button
-                                key={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                               <Link to='/'>Home</Link>
                             </Button>
-                        ))}
+                            {!user.user.isLogin ?<Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                               <Link to='/login'>Login</Link>
+                            </Button>:<></>}
+                        
                     </Box>
-
+                    {user.user.isLogin ?
                     <Box sx={{ flexGrow: 0 }}>
 
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
-                                Name
+                                {user.user.name}
                             </Typography>
                                 <Avatar alt="Remy Sharp" src="" />
                             </IconButton>
@@ -153,13 +172,16 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                            
+                                <MenuItem  onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">Profile</Typography>
                                 </MenuItem>
-                            ))}
+                                <MenuItem  onClick={logOutUser}>
+                                    <Typography textAlign="center">LogOut</Typography>
+                                </MenuItem>
+                           
                         </Menu>
-                    </Box>
+                    </Box>:<></>}
                 </Toolbar>
             </Container>
         </AppBar>
