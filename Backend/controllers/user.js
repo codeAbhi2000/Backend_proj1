@@ -2,8 +2,11 @@ const User = require('../models/user')
 const Expense = require('../models/expense')
 const Limit = require('../models/set_limit')
 const Budget = require('../models/budget')
+const Purchase = require('../models/purchase')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+require('dotenv').config();
+const Razorpay  = require('razorpay')
 
 
 const myToken = "$moBhi$Love430"
@@ -191,4 +194,56 @@ exports.postGetReportGivenRange = async  (req,res,next)=>{
             msg:'something went wrong'
         })
     } 
+}
+
+exports.purchasePremium = (req,res)=>{
+    const id = req.params.id
+    // console.log(process.env.RAZOR_PAY_KEY_ID);
+    try {
+        const rzp = new Razorpay({
+            key_id:process.env.RAZOR_PAY_KEY_ID,
+            key_secret:process.env.RAZOR_PAY_KEY_SECRET
+        })
+
+        const amount = 2500
+        // console.log(rzp);
+        rzp.orders.create({amount:amount,currency:'INR'},(err,order)=>{
+            if(err){
+                console.log(err);
+                return res.status(500).json({
+                    msg: "Something Went Wrong",
+                  });
+            }
+
+            const purchase = new Purchase(order.id,'PENDING',id)
+            purchase.save().
+            then(()=>{
+                return res.status(201).json({order,key_id:rzp.key_id})
+            }).catch(err => console.log(err))
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Something Went Wrong",
+          });
+    }
+}
+
+
+exports.successFullPurchase = async (req,res)=>{
+    const uid = req.body.uid;
+    const ord_id = req.body.order_id
+    // console.log(ord_id,uid);
+    try {
+        
+        await  Purchase.update('SUCCESS',ord_id,uid)
+        await User.updateMemberShip(uid)
+
+        res.json({
+            msg:'Your Membership upgraded'
+        })
+    } catch (error) {
+        res.status(500).json({
+            msg:'Somthing went wrong'
+        })
+    }
 }

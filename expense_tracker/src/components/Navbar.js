@@ -11,9 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { Badge } from '@mui/material';
 import {Link ,useNavigate} from 'react-router-dom'
 import { useContext } from 'react';
 import UserContext from '../context/userContext';
+import Axios from 'axios'
+
 
 
 function Navbar() {
@@ -53,11 +56,49 @@ function Navbar() {
         setAnchorElUser(null);
     };
 
+    const paymentHandler = async (e) => {
+        console.log('payment started');
+        e.preventDefault();
+      
+        const response = await Axios.get(`http://localhost:5000/subscribeToMembership/${user.user.id}`,{
+            headers:{
+                Authorization:localStorage.getItem('token')
+            }
+        });
+        
+        const options = {
+          key: response.data.key_id,
+          name: "Budgetbuddy",
+          description: "Track and analyse your expense",
+          order_id: response.data.order.id,
+          handler: async (res) => {
+            try {
+             const captureResponse = await Axios.post('http://localhost:5000/succesPurchase', {
+                order_id:response.data.order.id,
+                uid:user.user.id
+             },{
+                headers:{
+                    Authorization :localStorage.getItem('token')
+                }
+             })
+             console.log(captureResponse.data);
+             alert(captureResponse.data.msg)
+            } catch (err) {
+              console.log(err);
+            }
+          },
+          theme: {
+            color: "#686CFD",
+          },
+        };
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+        };
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                 
                     <Typography
                         variant="h6"
                         noWrap
@@ -113,6 +154,11 @@ function Navbar() {
                                 <MenuItem onClick={handleCloseNavMenu}>
                                 <Link to='/login'><Typography textAlign="center">Login</Typography></Link>
                                 </MenuItem>
+                                <MenuItem onClick={paymentHandler}>
+                                    Subcribe
+                                </MenuItem>
+
+
                            
                         </Menu>
                     </Box>
@@ -149,6 +195,12 @@ function Navbar() {
                             >
                                <Link to='/login'>Login</Link>
                             </Button>:<></>}
+                            {user.user.isLogin && !user.user.isPremiumUser ?<Button
+                                onClick={paymentHandler}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                              Subscribe
+                            </Button>:<></>}
                         
                     </Box>
                     {user.user.isLogin ?
@@ -156,9 +208,17 @@ function Navbar() {
 
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
-                                {user.user.name}
-                            </Typography>
+                                {user.user.isPremiumUser ?<Badge badgeContent='Prime' color='secondary' anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                }}>
+                                <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                                    {user.user.name}
+                                </Typography>
+                                </Badge>:
+                                 <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                                 {user.user.name}
+                             </Typography>}
                                 <Avatar alt="Remy Sharp" src="" />
                             </IconButton>
                         </Tooltip>

@@ -7,6 +7,7 @@ import  Axios from "axios";
 const UserState = (props) => {
     const [user, setuser] = useState({
         isLogin: false,
+        isPremiumUser:null,
         name: '',
         id: null,
         email:'',
@@ -29,13 +30,13 @@ const UserState = (props) => {
         console.log(logedUser);
         if(logedUser.length === 3){
 
-            setuser({isLogin:true, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:logedUser[2].budget,total_expense:logedUser[1].total_expense,income:logedUser[2].income })
+            setuser({isLogin:true,isPremiumUser:logedUser[0].ispremiumuser, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:logedUser[2].budget,total_expense:logedUser[1].total_expense,income:logedUser[2].income })
         }
         else if( logedUser.length === 2){
-            setuser({isLogin:true, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:logedUser[1].total_expense,income:0 })
+            setuser({isLogin:true,isPremiumUser:logedUser[0].ispremiumuser, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:logedUser[1].total_expense,income:0 })
         }
         else{
-            setuser({isLogin:true, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:0,income:0 })
+            setuser({isLogin:true,isPremiumUser:logedUser[0].ispremiumuser, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:0,income:0 })
         }
     }
 
@@ -43,13 +44,13 @@ const UserState = (props) => {
         const logedUser = JSON.parse(localStorage.getItem('user'))
         if(logedUser.length === 3){
 
-            setuser({isLogin:true, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:logedUser[2].budget,total_expense:logedUser[1].total_expense,income:logedUser[2].income })
+            setuser({isLogin:true,isPremiumUser:logedUser[0].ispremiumuser, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:logedUser[2].budget,total_expense:logedUser[1].total_expense,income:logedUser[2].income })
         }
         else if( logedUser.length === 2){
-            setuser({isLogin:true, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:logedUser[1].total_expense,income:0 })
+            setuser({isLogin:true,isPremiumUser:logedUser[0].ispremiumuser, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:logedUser[1].total_expense,income:0 })
         }
         else{
-            setuser({isLogin:true, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:0,income:0 })
+            setuser({isLogin:true, isPremiumUser:logedUser[0].ispremiumuser,name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:0,total_expense:0,income:0 })
         }
 
         

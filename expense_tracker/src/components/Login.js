@@ -44,6 +44,7 @@ function Login() {
                 user.setuser(
                     { 
                         isLogin:true, 
+                        isPremiumUser:logedUser[0].ispremiumuser,
                         name: logedUser[0].name, 
                         id: logedUser[0].id,
                         email:logedUser[0].email,

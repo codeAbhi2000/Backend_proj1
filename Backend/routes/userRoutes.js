@@ -20,6 +20,10 @@ router.post('/getYearReport',validator,userControler.postGetYearReport)
 
 router.post('/getReportGivenRange',validator,userControler.postGetReportGivenRange)
 
+router.post('/succesPurchase',validator,userControler.successFullPurchase)
+
+router.get('/subscribeToMembership/:id',validator,userControler.purchasePremium)
+
 router.get('/getAllUserDetails/:id',validator,userControler.getOverAllUserDeatails)
 
 router.get('/getAllExpenses/:id',validator,userControler.getAllUserExpenses)

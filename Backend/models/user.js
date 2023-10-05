@@ -20,7 +20,7 @@ module.exports = class User {
         try {
             const queries = [
                 {
-                  query: ' select u.id,u.name,u.email  from user u where u.email = ?',
+                  query: ' select u.id,u.name,u.email ,u.ispremiumuser from user u where u.email = ?',
                   values: [id],
                 },
                 {
@@ -53,6 +53,11 @@ module.exports = class User {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    static updateMemberShip(id){
+      // console.log(id);
+      return db.execute('update user set ispremiumuser = ? where id = ?',[true,id])
     }
 
 }
