@@ -11,9 +11,15 @@ import  UserState  from './context/userState'
 import AllExpenses from './components/AllExpenses';
 import HomeDash from './components/HomeDash';
 import AddExpense from './components/AddExpense';
+import Budget from './components/Budget';
+import Analyser from './components/Analyser';
+import Report from './components/Report';
+
 
 
 function App() {
+  
+  
   return (
     <>
     <UserState>
@@ -27,6 +33,9 @@ function App() {
             <Route path='allExpenses' element={<AllExpenses/>}/>
             <Route path='home' element={<HomeDash/>}/>
             <Route path='addExpense' element={<AddExpense/>}/>
+            <Route path='budgeting' element={<Budget/>}/>
+            <Route path='expenseAnalyse' element={<Analyser/>}/>
+            <Route path= 'report' element={<Report/>}/>
           </Route>
         </Routes>
       </ThemeProvider>

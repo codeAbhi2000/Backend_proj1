@@ -21,7 +21,7 @@ function Navbar() {
    
     const user = useContext(UserContext)
 
-    console.log(user.user.id);
+    // console.log(user.user);
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -35,7 +35,13 @@ function Navbar() {
 
     const logOutUser = ()=>{
         setAnchorElUser(null);
-        user.update(false,'',null)
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        user.setuser({
+            isLogin: false,
+            name: '',
+            id: null
+        })
         navigate('/')
     }
 
@@ -177,7 +183,10 @@ function Navbar() {
                                     <Typography textAlign="center">Profile</Typography>
                                 </MenuItem>
                                 <MenuItem  onClick={logOutUser}>
-                                    <Typography textAlign="center">LogOut</Typography>
+                                    <Typography textAlign="center">Logout</Typography>
+                                </MenuItem>
+                                <MenuItem >
+                                    <Link to='/userDash/home'><Typography textAlign="center">Dashbord</Typography></Link>
                                 </MenuItem>
                            
                         </Menu>

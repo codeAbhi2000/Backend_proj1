@@ -18,11 +18,17 @@ function SignUp() {
 
     const handleSubmit =  (e)=>{
         e.preventDefault()
-        console.log(signupData);
+        // console.log(signupData);
         Axios.post('http://localhost:5000/signup',signupData).then((res)=>{
             console.log(res);
-            navigate('/login')
-        })
+            if(res.data.msg === 'User Already Exixst'){
+                alert(res.data.msg)
+            }
+            else{
+                alert('User Sign Up Successful')
+                navigate('/login')
+            }
+        }).catch(err => console.log(err))
     }
     return (
         <Container 

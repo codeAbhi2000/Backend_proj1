@@ -5,7 +5,8 @@ const pool = mysql.createPool({
     database:'advance_expense_tracker',
     user:'root',
     password:"password",
-    host:'localhost'
+    host:'localhost',
+    timezone:'Z'
 })
 
 

@@ -1,10 +1,19 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import poster from '../assets/images/Manage money-amico.png'
-import {Send} from '@mui/icons-material'
-import {Link} from 'react-router-dom'
+import { Send } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
+import { useContext ,useEffect} from 'react';
+import UserContext from '../context/userContext';
 
 function Landing() {
+    const user = useContext(UserContext)
+  useEffect(() => {
+    if(localStorage.getItem('token')){
+      const logedUser = JSON.parse(localStorage.getItem('user'))
+      user.setuser({ isLogin:true, name: logedUser.name, id: logedUser.id })
+    }
+  })
     return (
         <Container sx={{
            width: '100%', display: 'flex', height: '90vh', mt: 1, color: 'white', justifyContent: 'center', alignItems: 'center'

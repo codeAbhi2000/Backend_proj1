@@ -3,16 +3,19 @@ import { Box } from '@mui/material'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function DoughnutChart() {
+function DoughnutChart({pdata}) {
   const data = {
-    labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+    labels: pdata.map((d)=>{
+        return d.name
+    }),
     datasets: [
       {
-        label: 'Dataset 1',
-        data: ['20','50','30'],
-        backgroundColor: ['red','blue','orange'],
+        label: 'Category',
+        data: pdata.map((d)=> {return d.total_expense}),
+        backgroundColor: ['red','blue','green','pink','yellow','orange'],
       }
     ]
   };
@@ -20,7 +23,7 @@ function DoughnutChart() {
     
  
   return (
-    <Box>
+    <Box height={"85%"}>
       <Doughnut data={data}/>
     </Box>
   )
