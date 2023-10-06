@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField } from '@mui/material'
+import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import Axios from 'axios'
@@ -9,9 +9,13 @@ function AllExpenses() {
   
   const user = useContext(UserContext)
   // console.log(user.user.id)
-
+  
   const date = new Date()
   const [Expenses, setExpenses] = useState([])
+  const [page, setpage] = useState(0)
+  const [rowPerPage, setrowPerPage] = useState(5)
+
+  
 
   const [filterData, setfilterData] = useState({
       searchKey:'',
@@ -30,6 +34,15 @@ function AllExpenses() {
 
   const handleChange = (e)=>{
     setfilterData({...filterData,[e.target.name]:e.target.value})
+  }
+
+  const handlePageChange = (event,newPage)=>{
+    setpage(newPage)
+  }
+
+  const handleRowPerPageChange = (e)=>{
+    setrowPerPage(+e.target.value)
+    setpage(0)
   }
 
   // console.log(filterData);
@@ -74,10 +87,11 @@ function AllExpenses() {
         </Box>
         </Stack>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: { sm: 650, xs: 250 } }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
+      <Paper>
+      <TableContainer >
+        <Table sx={{ minWidth: { sm: 650, xs: 250 },  }}  >
+          <TableHead stickyHeader>
+            <TableRow sx={{backgroundColor:'secondary.main'}}>
               <TableCell align="center">Date</TableCell>
               <TableCell align="center">Amount</TableCell>
               <TableCell align="center">Description</TableCell>
@@ -86,7 +100,7 @@ function AllExpenses() {
           </TableHead>
           <TableBody>
 
-            {filterData.filter && Expenses.filter((m)=> {
+            {filterData.filter ? Expenses.filter((m)=> {
                  let cdate = m.date.slice(5,6) === 0 ? m.date.slice(6,7): m.date.slice(5,7)
                 if(parseInt(cdate)===filterData.filter){
                    return m
@@ -94,7 +108,7 @@ function AllExpenses() {
                 else if (parseInt(m.date.slice(0,4)) === filterData.filter){
                   return m
                 }
-            }).map((e) => (
+            }).slice(page * rowPerPage , page * rowPerPage + rowPerPage ).map((e) => (
 
               <TableRow key={e.id}>
                 <TableCell align="center">{e.date.slice(0, 10).split('-').reverse().join("-")}</TableCell>
@@ -103,11 +117,11 @@ function AllExpenses() {
                 <TableCell align="center">{e.cat_name}</TableCell>
               </TableRow>
             ))
-
+              :<></>
           }
-            {filterData.searchKey && Expenses.filter((m)=>{
+            {filterData.searchKey ? Expenses.filter((m)=>{
                return m.cat_name.toLowerCase().includes(filterData.searchKey.toLowerCase()) 
-           }).map((e) => (
+           }).slice(page * rowPerPage , page * rowPerPage + rowPerPage ).map((e) => (
 
               <TableRow key={e.id}>
                 <TableCell align="center">{e.date.slice(0, 10).split('-').reverse().join("-")}</TableCell>
@@ -116,8 +130,10 @@ function AllExpenses() {
                 <TableCell align="center">{e.cat_name}</TableCell>
               </TableRow>
             ))
+            :<></>
             } 
-           {filterData.filter === '' && filterData.searchKey === '' ? Expenses.map((e) => (
+           {filterData.filter === '' && filterData.searchKey === '' ?  Expenses.slice(page * rowPerPage , page * rowPerPage + rowPerPage )
+           .map((e) => (
 
               <TableRow key={e.id}>
                 <TableCell align="center">{e.date.slice(0, 10).split('-').reverse().join("-")}</TableCell>
@@ -130,6 +146,19 @@ function AllExpenses() {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5,10,25]}
+        page={page}
+        count={Expenses.length}
+        rowsPerPage={rowPerPage}
+        component={'div'}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowPerPageChange}
+        sx={{backgroundColor:'secondary.main'}}
+      >
+          
+      </TablePagination>
+      </Paper>
     </>
   )
 }
