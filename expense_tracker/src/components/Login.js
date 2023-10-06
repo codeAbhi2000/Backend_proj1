@@ -84,7 +84,7 @@ function Login() {
                     <Stack spacing={2}>
                         <TextField variant='outlined' label="Email" name='email' color={'secondary'} onChange={handleChange} type='email' value={loginData.email} required/>
                         <TextField variant='outlined' label="Password" type="password" name='password' color='secondary' onChange={handleChange} value={loginData.password} required/>
-                        <FormHelperText>Forgot Password?</FormHelperText>
+                        <FormHelperText><Link to={'/forgotPassword'}>Forgot Password?</Link></FormHelperText>
                         <Button variant='contained' sx={{ bgcolor: 'secondary.main' }} type='submit'>Submit</Button>
                         <FormHelperText sx={{color:"white"}}>Don't have accout? <Link to='/signup' color='secondary'>Create new Accout</Link></FormHelperText>
                     </Stack>

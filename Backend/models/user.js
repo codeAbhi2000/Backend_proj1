@@ -60,4 +60,8 @@ module.exports = class User {
       return db.execute('update user set ispremiumuser = ? where id = ?',[true,id])
     }
 
+    static resetPassword(pass,id){
+      return db.execute('update user set password = ? where id = ? ',[pass,id])
+    }
+
 }

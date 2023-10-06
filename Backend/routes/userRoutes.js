@@ -26,6 +26,10 @@ router.get('/subscribeToMembership/:id',validator,userControler.purchasePremium)
 
 router.get('/getAllUserDetails/:id',validator,userControler.getOverAllUserDeatails)
 
+router.post('/forgotPassword/',userControler.forgotPassword)
+
+router.post('/resetPassword',userControler.resetPassword)
+
 router.get('/getAllExpenses/:id',validator,userControler.getAllUserExpenses)
 
 router.get('/getCatExpense/:id',validator,userControler.getCatExpenses)

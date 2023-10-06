@@ -15,6 +15,8 @@ import Budget from './components/Budget';
 import Analyser from './components/Analyser';
 import Report from './components/Report';
 import ErrorNotice from './components/ErrorNotice';
+import ForgotPass from './components/ForgotPass';
+import ResetPass from './components/ResetPass';
 
 
 
@@ -31,6 +33,8 @@ function App() {
           <Route path='/' element={<Landing/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<SignUp/>}/>
+          <Route path='/forgotPassword' element={<ForgotPass/>}/>
+          <Route path='/resetPassword/:uid/:token' element={<ResetPass/>}/>
           <Route path='/userDash' element={<Dashboard/>}>
             <Route path='allExpenses' element={<AllExpenses/>}/>
             <Route path='home' element={<HomeDash/>}/>
