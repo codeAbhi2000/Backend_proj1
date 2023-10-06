@@ -1,6 +1,7 @@
 import { Box, FormControl, Stack, TextField, Button, MenuItem, Select, Typography } from '@mui/material'
 import React, { useState,useRef } from 'react'
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/userContext';
 import DownloadIcon from '@mui/icons-material/Download';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -16,6 +17,8 @@ function Report() {
     const date = new Date()
     const user = useContext(UserContext)
     const contentRef = useRef(null);
+
+    const navigate = useNavigate()
 
     const [ViewRepo, setViewRepo] = useState(false)
 
@@ -158,12 +161,13 @@ function Report() {
                     start_date: Range.start_date,
                     end_date: Range.end_date,
                     uid: user.user.id
-                },
+                    },
                     {
                         headers: {
                             Authorization: localStorage.getItem('token')
                         }
-                    }).then(res => {
+                })
+                .then(res => {
                         console.log(res);
                         setGivenRangeData({
                             allExpenses:res.data.data[0],
@@ -171,12 +175,15 @@ function Report() {
                             savings_budget:res.data.data[2],
                             cat_distribution:res.data.data[3]
                         })
-                    }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
             }
         }
     }
     // console.log(Range.type);
-    return (
+    if(user.user.isPremiumUser)
+    {
+        console.log(user.user.isPremiumUser);
+        return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -250,6 +257,13 @@ function Report() {
             </Box> : <></>}
         </Box>
     )
+    }
+    else
+    {
+        console.log(user.user.isPremiumUser);
+        navigate('/userDash/notice')
+        return null
+    }
 }
 
 export default Report

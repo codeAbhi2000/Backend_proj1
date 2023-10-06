@@ -119,7 +119,7 @@ exports.getOverAllUserDeatails = (req,res)=>{
     User.getOverAllUserDeatails(id)
     .then((data)=>{
         res.json({
-            data:data[0]
+            data:data
         })
     }).catch(err => console.log(err))
 }

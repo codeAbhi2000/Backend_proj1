@@ -2,6 +2,7 @@ import { Box, Divider, Stack, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import LineChart from './LineChart'
 import Axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import DonutLargeOutlinedIcon from '@mui/icons-material/DonutLargeOutlined';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
@@ -12,7 +13,7 @@ import Counter from './Counter';
 
 function Analyser() {
     const user = useContext(UserContext)
-
+    const navigate = useNavigate()
     const [ExpenseStatus, setStatus] = useState(true)
     const [CatData, setCatData] = useState([])
     const [LimitData, setLimitData] = useState([])
@@ -50,6 +51,8 @@ function Analyser() {
      // react-hooks/exhaustive-deps
     })
 
+    if(user.user.isPremiumUser)
+    {
     return (
         <Stack>
             <Box width={"100%"} >
@@ -84,6 +87,11 @@ function Analyser() {
             </Box>
         </Stack>
     )
+    }
+    else{
+          navigate('/userDash/notice')
+        return null
+    }
 }
 
 export default Analyser

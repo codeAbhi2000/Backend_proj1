@@ -7,7 +7,7 @@ import  Axios from "axios";
 const UserState = (props) => {
     const [user, setuser] = useState({
         isLogin: false,
-        isPremiumUser:null,
+        isPremiumUser:false,
         name: '',
         id: null,
         email:'',
@@ -22,7 +22,7 @@ const UserState = (props) => {
                 Authorization : localStorage.getItem('token')
             }
         }).then(res =>{
-            console.log(res.data.data[0]);
+            console.log(res.data.data);
             localStorage.setItem('user', JSON.stringify([...res.data.data[0], ...res.data.data[1], ...res.data.data[2]]))
         }).catch(err => console.log(err))
 

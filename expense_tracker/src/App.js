@@ -6,23 +6,25 @@ import theme from './assets/theme'
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Landing from './components/Landing';
-import {Routes,Route} from 'react-router-dom'
-import  UserState  from './context/userState'
+import {Routes,Route,} from 'react-router-dom'
+
 import AllExpenses from './components/AllExpenses';
 import HomeDash from './components/HomeDash';
 import AddExpense from './components/AddExpense';
 import Budget from './components/Budget';
 import Analyser from './components/Analyser';
 import Report from './components/Report';
+import ErrorNotice from './components/ErrorNotice';
 
 
 
 function App() {
   
   
+  
   return (
     <>
-    <UserState>
+   
       <ThemeProvider theme={theme}>
         <Navbar/>
         <Routes>
@@ -36,10 +38,11 @@ function App() {
             <Route path='budgeting' element={<Budget/>}/>
             <Route path='expenseAnalyse' element={<Analyser/>}/>
             <Route path= 'report' element={<Report/>}/>
-          </Route>
+            <Route path='notice' element={<ErrorNotice value={'This is a premium Feature Please buy a subscription To use it'}/>}/>
+           </Route>
         </Routes>
       </ThemeProvider>
-      </UserState>
+      
     </>
   );
 }

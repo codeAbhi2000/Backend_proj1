@@ -20,8 +20,8 @@ function AddExpense() {
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        console.log(localStorage.getItem('token'));
-        console.log(ExpenseData);
+        // console.log(localStorage.getItem('token'));
+        // console.log(ExpenseData);
         Axios.post('http://localhost:5000/addExpense',{
             description:ExpenseData.description,
             date:ExpenseData.date,
@@ -40,8 +40,8 @@ function AddExpense() {
                 date:'',
                 cat_id:null
             })
-            user.updateUser() 
         }).catch(err => console.log(err))
+        user.updateUser() 
     }
     return (
         <Container
