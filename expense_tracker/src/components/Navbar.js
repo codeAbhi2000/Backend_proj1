@@ -208,7 +208,7 @@ function Navbar() {
 
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {user.user.isPremiumUser ?<Badge badgeContent='Prime' color='secondary' anchorOrigin={{
+                                {user.user.isPremiumUser ?<Badge badgeContent='Prime' color='secondary'  anchorOrigin={{
                                         vertical: 'top',
                                         horizontal: 'left',
                                 }}>

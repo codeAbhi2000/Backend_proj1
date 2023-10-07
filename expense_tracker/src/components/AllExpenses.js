@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination,IconButton,Button,Dialog,DialogActions,DialogContent,DialogTitle } from '@mui/material'
+import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination,IconButton,Button,Dialog,DialogActions,DialogContent,DialogTitle, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import Axios from 'axios'
@@ -186,7 +186,7 @@ function AllExpenses() {
             ))
             :<></>
             } 
-           {filterData.filter === '' && filterData.searchKey === '' ?  Expenses.slice(page * rowPerPage , page * rowPerPage + rowPerPage )
+           {filterData.filter === '' && filterData.searchKey === '' && Expenses.length > 0 ?  Expenses.slice(page * rowPerPage , page * rowPerPage + rowPerPage )
            .map((e) => (
 
               <TableRow key={e.id}>
@@ -196,7 +196,7 @@ function AllExpenses() {
                 <TableCell align="center">{e.cat_name}</TableCell>
                 <TableCell align="center"><IconButton onClick={()=>clickedItemdata(e)}><EditIcon/></IconButton></TableCell>
               </TableRow>
-            )):<></>
+            )):<Typography variant='h5' textAlign={'center'}>No Expense Data </Typography>
             }
           </TableBody>
         </Table>

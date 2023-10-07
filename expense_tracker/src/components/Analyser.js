@@ -47,6 +47,7 @@ function Analyser() {
             if( user.user.total_expense > user.user.budget){
                 setStatus(false)
             }
+           
         }
      // react-hooks/exhaustive-deps
     })

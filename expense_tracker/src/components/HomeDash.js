@@ -49,6 +49,7 @@ function HomeDash() {
         Category_wise_expense()
         getMonthData()
         user.upDateLocalUser()
+        
     },[])
     
   return (
@@ -59,10 +60,10 @@ function HomeDash() {
           <BasicCard title={'Income'} value={user.user.income}/>
         </Stack>
         <Stack width='100%'  mt={2} direction={{xs:'column',sm:'row'}} alignItems='center' justifyItems='center' justifyContent='space-evenly'>
-          <Box width={{sm:"40%",xs:'80%'}} height={{sm:'70vh',xs:'50vh'}} sx={{display:'flex',flexDirection:'column'}} alignItems={'center'} justifyContent='center' border='1px solid white' m={1}>
+          {CatData.length > 0 ? <Box width={{sm:"40%",xs:'80%'}} height={{sm:'70vh',xs:'50vh'}} sx={{display:'flex',flexDirection:'column'}} alignItems={'center'} justifyContent='center' border='1px solid white' m={1}>
           <Typography variant='h6' m={3} textAlign={'center'}>Total Spending on Each Category</Typography>
               <DoughnutChart pdata={CatData} />
-          </Box>
+          </Box>:<Typography variant='h6' m={3} textAlign={'center'}>Add expense to view data</Typography>}
           <Box width={{sm:"40%",xs:'80%'}} height={{sm:'60vh',xs:'40vh'}} sx={{display:'flex',flexDirection:'column'}} alignItems={'center'}  border='1px solid white'  m={1}>
              <Typography variant='h6' m={3} textAlign={'center'}>Day-To-Day Expenses in Current Month </Typography>
               <LineChart pdata={MonthData} lable={'Monthly Expense'} lable2='' second={true}/>

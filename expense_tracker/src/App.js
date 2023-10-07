@@ -1,13 +1,12 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Udashboard.js';
-import { ThemeProvider } from '@mui/material';
+import {  ThemeProvider} from '@mui/material';
 import theme from './assets/theme'
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Landing from './components/Landing';
 import {Routes,Route,} from 'react-router-dom'
-
 import AllExpenses from './components/AllExpenses';
 import HomeDash from './components/HomeDash';
 import AddExpense from './components/AddExpense';
@@ -23,7 +22,7 @@ import ResetPass from './components/ResetPass';
 function App() {
   
   
-  
+ 
   return (
     <>
    
