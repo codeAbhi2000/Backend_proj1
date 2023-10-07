@@ -26,12 +26,12 @@ function MonthReport({ data }) {
                         <TableBody>
                             {data.allExpenses.map((e) => (
 
-                            <TableRow key={e.id}>
-                            <TableCell align="center">{e.date.slice(0, 10).split('-').reverse().join("-")}</TableCell>
-                            <TableCell align="center">{e.amount}</TableCell>
-                            <TableCell align="center">{e.description}</TableCell>
-                            <TableCell align="center">{e.cat_name}</TableCell>
-                            </TableRow>
+                                <TableRow key={e.id}>
+                                    <TableCell align="center">{e.date.slice(0, 10).split('-').reverse().join("-")}</TableCell>
+                                    <TableCell align="center">{e.amount}</TableCell>
+                                    <TableCell align="center">{e.description}</TableCell>
+                                    <TableCell align="center">{e.cat_name}</TableCell>
+                                </TableRow>
                             ))}
                         </TableBody>
                     </Table>
@@ -50,91 +50,91 @@ function MonthReport({ data }) {
                         <BasicCard title={'Total Expense'} value={data.total_expense[0].total_expense} />
                         <BasicCard title={'Total Budget'} value={data.savings_budget[0].total_budget} />
                         <BasicCard title={'Savings'} value={data.savings_budget[0].savings} />
-                        <BasicCard title={'Income'} value={data.savings_budget[0].savings+ +data.savings_budget[0].total_budget}/>
+                        <BasicCard title={'Income'} value={data.savings_budget[0].savings + +data.savings_budget[0].total_budget} />
                     </Stack>
                 </Box>
-                <Box sx={{ flexGrow: 1 }} mt={3}  border={'1px solid white'}>
+                <Box sx={{ flexGrow: 1 }} mt={3} border={'1px solid white'}>
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <TrendingUpOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <TrendingUpOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Investments
                                     </Typography>
+                                    <Typography>
+                                        Rs. {data.cat_distribution[0].total_expense}
+                                    </Typography>
                                 </Stack>
-                                <Typography>
-                                    {data.cat_distribution[0].total_expense}
-                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <ReceiptOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <ReceiptOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Bills&Utility
                                     </Typography>
+                                    <Typography>
+                                        Rs. {data.cat_distribution[1].total_expense}
+                                    </Typography>
                                 </Stack>
-                                <Typography>
-                                    {data.cat_distribution[1].total_expense}
-                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <CommuteOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <CommuteOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Transportation
                                     </Typography>
+                                    <Typography>
+                                        Rs. {data.cat_distribution[2].total_expense}
+                                    </Typography>
                                 </Stack>
-                                <Typography>
-                                    {data.cat_distribution[2].total_expense}
-                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <ShoppingBagOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <ShoppingBagOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Shopping
                                     </Typography>
+                                    <Typography>
+                                        Rs. {data.cat_distribution[3].total_expense}
+                                    </Typography>
                                 </Stack>
-                                <Typography>
-                                    {data.cat_distribution[3].total_expense}
-                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={1}>
-                                    <Box>
-                                        <img src={Grrocery} alt="grocery" width={'50%'} />
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={1}>
+                                    <Box display={'flex'}>
+                                        <img src={Grrocery} alt="grocery" width={'20%'} style={{ marginRight: "5%" }} />
+                                        <Typography>
+                                            Grocery
+                                        </Typography>
                                     </Box>
                                     <Typography>
-                                        Grocery
+                                        Rs. {data.cat_distribution[4].total_expense}
                                     </Typography>
                                 </Stack>
-                                <Typography>
-                                    {data.cat_distribution[4].total_expense}
-                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={1}>
-                                    <Box>
-                                        <img src={Other} alt="other" width={'50%'} />
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={1}>
+                                    <Box display={'flex'}>
+                                        <img src={Other} alt="other" width={'20%'} style={{ marginRight: "5%" }} />
+                                        <Typography>
+                                            Others
+                                        </Typography>
                                     </Box>
                                     <Typography>
-                                        Others
+                                        Rs. {data.cat_distribution[5].total_expense}
                                     </Typography>
                                 </Stack>
-                                <Typography>
-                                    {data.cat_distribution[5].total_expense}
-                                </Typography>
                             </Box>
                         </Grid>
                     </Grid>

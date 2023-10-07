@@ -85,26 +85,22 @@ function YearReport({ data }) {
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         <Grid item xs={2} sm={4} md={4}>
 
-                            <Stack direction={{ sm: 'row', xs: "column" }} spacing={2}>
-                                <Box>
-                                    <Typography>
-                                        <TrendingUpOutlinedIcon color='secondary' />
-                                        Investments
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <Typography >
-                                        Rs. {data.cata_wise_data[0].total_expense}
-                                    </Typography>
-                                </Box>
+                            <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                <Typography display={'flex'}>
+                                    <TrendingUpOutlinedIcon color='secondary' sx={{ mr: 1 }} />
+                                    Investments
+                                </Typography>
+                                <Typography>
+                                    Rs. {data.cata_wise_data[0].total_expense}
+                                </Typography>
                             </Stack>
 
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <ReceiptOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <ReceiptOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Bills&Utility
                                     </Typography>
                                     <Typography>
@@ -115,9 +111,9 @@ function YearReport({ data }) {
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <CommuteOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <CommuteOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Transportation
                                     </Typography>
                                     <Typography>
@@ -128,9 +124,9 @@ function YearReport({ data }) {
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={2}>
-                                    <ShoppingBagOutlinedIcon color='secondary' />
-                                    <Typography>
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={2}>
+                                    <Typography display={'flex'}>
+                                        <ShoppingBagOutlinedIcon color='secondary' sx={{ mr: 1 }} />
                                         Shopping
                                     </Typography>
                                     <Typography>
@@ -141,13 +137,13 @@ function YearReport({ data }) {
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={1}>
-                                    <Box>
-                                        <img src={Grrocery} alt="grocery" width={'50%'} />
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={1}>
+                                    <Box display={'flex'}>
+                                        <img src={Grrocery} alt="grocery" width={'20%'} style={{ marginRight: "5%" }} />
+                                        <Typography>
+                                            Grocery
+                                        </Typography>
                                     </Box>
-                                    <Typography>
-                                        Grocery
-                                    </Typography>
                                     <Typography>
                                         Rs. {data.cata_wise_data[4].total_expense}
                                     </Typography>
@@ -156,13 +152,13 @@ function YearReport({ data }) {
                         </Grid>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>
-                                <Stack direction={'row'} spacing={1}>
-                                    <Box>
-                                        <img src={Other} alt="other" width={'50%'} />
+                                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={1}>
+                                    <Box display={'flex'}>
+                                        <img src={Other} alt="other" width={'20%'} style={{ marginRight: "5%" }} />
+                                        <Typography>
+                                            Others
+                                        </Typography>
                                     </Box>
-                                    <Typography>
-                                        Others
-                                    </Typography>
                                     <Typography>
                                         Rs. {data.cata_wise_data[5].total_expense}
                                     </Typography>

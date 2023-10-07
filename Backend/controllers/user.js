@@ -107,12 +107,13 @@ exports.getBudgetLimit = (req, res) => {
 }
 
 exports.postAddExpense = (req, res) => {
+    const id = req.body.id
     const desc = req.body.description;
     const amount = req.body.amount;
     const date = req.body.date;
     const uid = req.body.uid
     const cat_id = req.body.cat_id;
-    const expense = new Expense(null, desc, date, amount, cat_id, uid)
+    const expense = new Expense(id, desc, date, amount, cat_id, uid)
     expense.save()
         .then(() => {
             res.json({

@@ -1,9 +1,11 @@
-import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination } from '@mui/material'
+import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination,IconButton,Button,Dialog,DialogActions,DialogContent,DialogTitle } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import Axios from 'axios'
 import { useContext } from 'react';
 import UserContext from '../context/userContext';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 function AllExpenses() {
   
@@ -14,9 +16,30 @@ function AllExpenses() {
   const [Expenses, setExpenses] = useState([])
   const [page, setpage] = useState(0)
   const [rowPerPage, setrowPerPage] = useState(5)
-
+  const [open ,setopen] = useState(false)
+  const [EditData, setEditData] = useState({
+    id:null,
+    description:'',
+    amount:null,
+    date:'',
+    cat_id:null
+  })
   
+  const clickedItemdata = (obj)=>{
+    setopen(true)
+    console.log(obj);
+    setEditData({
+      id:obj.id,
+      description:obj.description,
+      amount:obj.amount,
+      date:obj.date.slice(0,10),
+      cat_id:obj.cat_id
+    })
+  }
 
+  const handleFromDataChange = (e)=>{
+    setEditData({...EditData,[e.target.name]:e.target.value})
+  }
   const [filterData, setfilterData] = useState({
       searchKey:'',
       filter:''
@@ -43,6 +66,34 @@ function AllExpenses() {
   const handleRowPerPageChange = (e)=>{
     setrowPerPage(+e.target.value)
     setpage(0)
+  }
+
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    console.log(EditData);
+    Axios.post('http://localhost:5000/addExpense',{
+            id : EditData.id,       
+            description:EditData.description,
+            date:EditData.date,
+            amount:EditData.amount,
+            uid:user.user.id ,
+            cat_id:EditData.cat_id
+        },{
+            headers:{
+                Authorization: localStorage.getItem('token')
+            }
+        }).then((res)=>{
+            alert(res.data.msg)
+            setopen(false)
+            setEditData({
+              id:null,
+              description:'',
+              amount:null,
+              date:'',
+              cat_id:null
+            })
+
+        }).catch(err => console.log(err))
   }
 
   // console.log(filterData);
@@ -96,6 +147,7 @@ function AllExpenses() {
               <TableCell align="center">Amount</TableCell>
               <TableCell align="center">Description</TableCell>
               <TableCell align="center">Category</TableCell>
+              <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -115,6 +167,7 @@ function AllExpenses() {
                 <TableCell align="center">{e.amount}</TableCell>
                 <TableCell align="center">{e.description}</TableCell>
                 <TableCell align="center">{e.cat_name}</TableCell>
+                <TableCell align="center"><IconButton onClick={()=>clickedItemdata(e)}><EditIcon/></IconButton></TableCell>
               </TableRow>
             ))
               :<></>
@@ -128,6 +181,7 @@ function AllExpenses() {
                 <TableCell align="center">{e.amount}</TableCell>
                 <TableCell align="center">{e.description}</TableCell>
                 <TableCell align="center">{e.cat_name}</TableCell>
+                <TableCell align="center"><IconButton onClick={()=>clickedItemdata(e)}><EditIcon/></IconButton></TableCell>
               </TableRow>
             ))
             :<></>
@@ -140,6 +194,7 @@ function AllExpenses() {
                 <TableCell align="center">{e.amount}</TableCell>
                 <TableCell align="center">{e.description}</TableCell>
                 <TableCell align="center">{e.cat_name}</TableCell>
+                <TableCell align="center"><IconButton onClick={()=>clickedItemdata(e)}><EditIcon/></IconButton></TableCell>
               </TableRow>
             )):<></>
             }
@@ -159,6 +214,42 @@ function AllExpenses() {
           
       </TablePagination>
       </Paper>
+      <div>
+      <Dialog open={open}>
+        <DialogTitle>Edit Expense</DialogTitle>
+        <DialogContent >
+        <form onSubmit={handleSubmit} >
+                        <Stack spacing={1}>
+                            <TextField variant='outlined' label="Description" name='description' color='secondary' type='text' value={EditData.description} required onChange={handleFromDataChange}/>
+                            <TextField variant='outlined' label="Amount" type="number" name='amount' color='secondary' value={EditData.amount} required onChange={handleFromDataChange}/>
+                            <label htmlFor="date">Date</label>
+                            <TextField variant='outlined' id='date' type="date" name='date' value={EditData.date} color='secondary' required onChange={handleFromDataChange}/>
+                            <label htmlFor="demo-simple-select">Category</label>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label='category'
+                                name='cat_id'
+                                value={EditData.cat_id}
+                                onChange={handleFromDataChange}
+                            >
+                                <MenuItem value={1000}>Investment</MenuItem>
+                                <MenuItem value={1001}>Bills & Utilities</MenuItem>
+                                <MenuItem value={1002}>Transportation</MenuItem>
+                                <MenuItem value={1003}>Shopping</MenuItem>
+                                <MenuItem value={1004}>Grocery</MenuItem>
+                                <MenuItem value={1005}>Others</MenuItem>
+                            </Select>
+                            <Button variant='contained' sx={{ bgcolor: 'secondary.main' }} type='submit'>Submit</Button>
+                        </Stack>
+                    </form>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={()=> setopen(false)}  color='secondary'  >Cancel</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
     </>
   )
 }

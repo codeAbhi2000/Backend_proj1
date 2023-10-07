@@ -182,7 +182,7 @@ function Report() {
     // console.log(Range.type);
     if(user.user.isPremiumUser)
     {
-        console.log(user.user.isPremiumUser);
+       
         return (
         <Box sx={{
             display: 'flex',
@@ -198,7 +198,7 @@ function Report() {
                 justifyContent: 'center',
                 p: 2,
                 mt: 2
-            }} width={{ sm: '80%', xs: '90%' }} border={'1px solid'}>
+            }} width={{ sm: '80%', xs: '90%' }} >
                 <FormControl sx={{
                     width: { sm: '80%', xs: '90%' },
                     mt: 2,

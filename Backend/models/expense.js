@@ -12,7 +12,7 @@ module.exports = class Expense{
     save(){
 
         if(this.id){
-
+            return db.execute('update expense set description = ?, date= ?, amount= ?,category_id=? where id = ? and uid =? ',[this.description,this.date,this.amount,this.cat_id,this.id,this.uid])
         }
         else{
             return db.execute('insert into advance_expense_tracker.expense (description,date,amount,category_id,uid) values(?,?,?,?,?)',
