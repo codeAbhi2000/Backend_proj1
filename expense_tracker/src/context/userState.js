@@ -22,12 +22,12 @@ const UserState = (props) => {
                 Authorization : localStorage.getItem('token')
             }
         }).then(res =>{
-            console.log(res.data.data);
+            // console.log(res.data.data);
             localStorage.setItem('user', JSON.stringify([...res.data.data[0], ...res.data.data[1], ...res.data.data[2]]))
         }).catch(err => console.log(err))
 
         const logedUser = JSON.parse(localStorage.getItem('user'))
-        console.log(logedUser);
+        // console.log(logedUser);
         if(logedUser.length === 3){
 
             setuser({isLogin:true,isPremiumUser:logedUser[0].ispremiumuser, name: logedUser[0].name, id: logedUser[0].id,email:logedUser[0].email,budget:logedUser[2].budget,total_expense:logedUser[1].total_expense,income:logedUser[2].income })

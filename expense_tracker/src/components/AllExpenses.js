@@ -70,7 +70,7 @@ function AllExpenses() {
 
   const handleSubmit = (e)=>{
     e.preventDefault()
-    console.log(EditData);
+    // console.log(EditData);
     Axios.post('http://localhost:5000/addExpense',{
             id : EditData.id,       
             description:EditData.description,
@@ -100,7 +100,7 @@ function AllExpenses() {
  
   useEffect(() => {
     getExpenses()
-  })
+  },[])
 
   // console.log(Expenses);
   return (

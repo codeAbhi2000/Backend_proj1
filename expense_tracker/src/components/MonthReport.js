@@ -53,7 +53,7 @@ function MonthReport({ data }) {
                         <BasicCard title={'Income'} value={data.savings_budget[0].savings + +data.savings_budget[0].total_budget} />
                     </Stack>
                 </Box>
-                <Box sx={{ flexGrow: 1 }} mt={3} border={'1px solid white'}>
+                <Box sx={{ flexGrow: 1 }} mt={3} >
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         <Grid item xs={2} sm={4} md={4}>
                             <Box>

@@ -76,6 +76,7 @@ function Budget() {
                 others:null
             })
         }).catch(err => console.log(err))
+        user.updateUser()
     }
     return (
         <Container

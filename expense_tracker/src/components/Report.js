@@ -103,7 +103,7 @@ function Report() {
         setViewRepo(true)
         if (Range.type === 'this_month')
         {
-            console.log(`get ${date.getMonth() + 1} Month Report`);
+            // console.log(`get ${date.getMonth() + 1} Month Report`);
             Axios.post('http://localhost:5000/getMonthReport', {
                 month: date.getMonth() + 1,
                 uid: user.user.id
@@ -124,7 +124,7 @@ function Report() {
         }
         else if (Range.type === 'this_year')
         {
-            console.log(`get ${date.getFullYear()} year  Report`);
+            // console.log(`get ${date.getFullYear()} year  Report`);
             Axios.post('http://localhost:5000/getYearReport', {
                 year: date.getFullYear(),
                 uid: user.user.id
@@ -146,7 +146,7 @@ function Report() {
         }
         else
         {
-            console.log(`get report in range of ${Range.start_date} to ${Range.end_date}`);
+            // console.log(`get report in range of ${Range.start_date} to ${Range.end_date}`);
             if (Range.end_date < Range.start_date)
             {
                 alert('End date must be greater than start date')

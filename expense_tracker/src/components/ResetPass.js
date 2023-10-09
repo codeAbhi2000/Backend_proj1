@@ -17,7 +17,7 @@ function ResetPass() {
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
-        console.log('started');
+        // console.log('started');
         
             if(passwords.password === passwords.cfm_password){
                 const response = await  Axios.post('http://localhost:5000/resetPassword',{

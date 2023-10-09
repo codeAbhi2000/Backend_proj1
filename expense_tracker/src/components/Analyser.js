@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import LineChart from './LineChart'
 import Axios from 'axios'
@@ -50,7 +50,7 @@ function Analyser() {
            
         }
      // react-hooks/exhaustive-deps
-    })
+    },[])
 
     if(user.user.isPremiumUser)
     {
@@ -82,10 +82,8 @@ function Analyser() {
                     </Box>
                 </Stack>
             </Box>
-            <Divider />
-            <Box>
-                this is second
-            </Box>
+            
+           
         </Stack>
     )
     }

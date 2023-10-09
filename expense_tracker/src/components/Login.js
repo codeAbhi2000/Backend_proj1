@@ -24,7 +24,7 @@ function Login() {
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
-        console.log(loginData);
+        // console.log(loginData);
         Axios.post('http://localhost:5000/login',loginData).then((res)=>{
             // console.log(res.data);
             if(res.data.msg === 'Inavalid Credentials'){
@@ -53,7 +53,7 @@ function Login() {
                         income:logedUser[2]? logedUser[2].income:0
                     }
                 )
-                 console.log(user.user);
+                //  console.log(user.user);
                 navigate('/userDash/home')
                 
             }

@@ -57,7 +57,7 @@ function Navbar() {
     };
 
     const paymentHandler = async (e) => {
-        console.log('payment started');
+        // console.log('payment started');
         e.preventDefault();
       
         const response = await Axios.get(`http://localhost:5000/subscribeToMembership/${user.user.id}`,{
