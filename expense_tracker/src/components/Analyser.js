@@ -18,7 +18,7 @@ function Analyser() {
     const [CatData, setCatData] = useState([])
     const [LimitData, setLimitData] = useState([])
     const Category_wise_expense = () => {
-        Axios.get(`http://localhost:5000/getCatExpense/${user.user.id}`, {
+        Axios.get(`http://13.127.183.58:5000/getCatExpense/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -29,7 +29,7 @@ function Analyser() {
     }
 
     const getBudgetLimit = () => {
-        Axios.get(`http://localhost:5000/getBudgetLimit/${user.user.id}`, {
+        Axios.get(`http://13.127.183.58:5000/getBudgetLimit/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
 
@@ -58,7 +58,7 @@ function Analyser() {
         <Stack>
             <Box width={"100%"} >
                 <Typography variant='h4' m={3} textAlign={'center'}>Overview Of Expenses</Typography>
-                <Stack direction={{ sm: 'row', xs: 'column' }} spacing={{ sm:1 , xs:2}}>
+                {CatData.length > 0 && LimitData.length > 0 ?<Stack direction={{ sm: 'row', xs: 'column' }} spacing={{ sm:1 , xs:2}}>
                     <Box width={{ sm: '60%', xs: '90%' }} p={2} sx={{ display: 'flex', flexDirection: 'column' }} justifyContent={'center'} alignItems={'center'}>
                         <Typography variant='h6' m={3} textAlign={'center'}>Limit & Spending on Each Category</Typography>
                         <LineChart pdata={CatData} lable={'Cat Spent'} lable2='Cat Limit' second={false} pdata2={LimitData} />
@@ -80,7 +80,7 @@ function Analyser() {
                             }</Typography>
                         </Box>
                     </Box>
-                </Stack>
+                </Stack> : <Typography variant='h6' m={3} textAlign={'center'}>Add expense and Budget view data</Typography>}
             </Box>
             
            

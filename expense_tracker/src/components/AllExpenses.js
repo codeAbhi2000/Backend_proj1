@@ -46,7 +46,7 @@ function AllExpenses() {
   })
 
   const getExpenses = async () => {
-    const expense = await Axios.get(`http://localhost:5000/getAllExpenses/${user.user.id}`, {
+    const expense = await Axios.get(`http://13.127.183.58:5000/getAllExpenses/${user.user.id}`, {
       headers: {
         Authorization: localStorage.getItem('token')
       }
@@ -71,7 +71,7 @@ function AllExpenses() {
   const handleSubmit = (e)=>{
     e.preventDefault()
     // console.log(EditData);
-    Axios.post('http://localhost:5000/addExpense',{
+    Axios.post('http://13.127.183.58:5000/addExpense',{
             id : EditData.id,       
             description:EditData.description,
             date:EditData.date,

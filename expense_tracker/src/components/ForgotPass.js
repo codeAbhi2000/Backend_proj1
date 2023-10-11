@@ -15,7 +15,7 @@ function ForgotPass() {
         e.preventDefault()
         try {
             
-            const res = await Axios.post('http://localhost:5000/forgotPassword',{
+            const res = await Axios.post('http://13.127.183.58:5000/forgotPassword',{
               email:ReseEmail
             })
       

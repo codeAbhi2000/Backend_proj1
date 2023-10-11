@@ -104,7 +104,7 @@ function Report() {
         if (Range.type === 'this_month')
         {
             // console.log(`get ${date.getMonth() + 1} Month Report`);
-            Axios.post('http://localhost:5000/getMonthReport', {
+            Axios.post('http://13.127.183.58:5000/getMonthReport', {
                 month: date.getMonth() + 1,
                 uid: user.user.id
             },
@@ -125,7 +125,7 @@ function Report() {
         else if (Range.type === 'this_year')
         {
             // console.log(`get ${date.getFullYear()} year  Report`);
-            Axios.post('http://localhost:5000/getYearReport', {
+            Axios.post('http://13.127.183.58:5000/getYearReport', {
                 year: date.getFullYear(),
                 uid: user.user.id
             },
@@ -157,7 +157,7 @@ function Report() {
                 })
             } else
             {
-                Axios.post('http://localhost:5000/getReportGivenRange', {
+                Axios.post('http://13.127.183.58:5000/getReportGivenRange', {
                     start_date: Range.start_date,
                     end_date: Range.end_date,
                     uid: user.user.id

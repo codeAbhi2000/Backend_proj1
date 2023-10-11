@@ -22,7 +22,7 @@ function AddExpense() {
         e.preventDefault()
         // console.log(localStorage.getItem('token'));
         // console.log(ExpenseData);
-        Axios.post('http://localhost:5000/addExpense',{
+        Axios.post('http://13.127.183.58:5000/addExpense',{
             description:ExpenseData.description,
             date:ExpenseData.date,
             amount:ExpenseData.amount,

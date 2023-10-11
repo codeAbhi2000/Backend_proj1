@@ -19,7 +19,7 @@ function SignUp() {
     const handleSubmit =  (e)=>{
         e.preventDefault()
         // console.log(signupData);
-        Axios.post('http://localhost:5000/signup',signupData).then((res)=>{
+        Axios.post('http://13.127.183.58:5000/signup',signupData).then((res)=>{
             console.log(res);
             if(res.data.msg === 'User Already Exixst'){
                 alert(res.data.msg)

@@ -13,7 +13,7 @@ function HomeDash() {
     const [CatData, setCatData] = useState([])
     const [MonthData, setMonthData] = useState([])
     const Category_wise_expense = ()=>{
-        Axios.get(`http://localhost:5000/getCatExpense/${user.user.id}`,{
+        Axios.get(`http://13.127.183.58:5000/getCatExpense/${user.user.id}`,{
             headers:{
                 Authorization : localStorage.getItem('token')
             }
@@ -26,7 +26,7 @@ function HomeDash() {
     const getMonthData = async ()=>{
         const d = new Date()
         //  console.log( d.getMonth() + 1);
-        const expense = await Axios.get(`http://localhost:5000/getAllExpenses/${user.user.id}`,{
+        const expense = await Axios.get(`http://13.127.183.58:5000/getAllExpenses/${user.user.id}`,{
         headers:{
           Authorization: localStorage.getItem('token')
         }
@@ -64,10 +64,10 @@ function HomeDash() {
           <Typography variant='h6' m={3} textAlign={'center'}>Total Spending on Each Category</Typography>
               <DoughnutChart pdata={CatData} />
           </Box>:<Typography variant='h6' m={3} textAlign={'center'}>Add expense to view data</Typography>}
-          <Box width={{sm:"40%",xs:'80%'}} height={{sm:'60vh',xs:'40vh'}} sx={{display:'flex',flexDirection:'column'}} alignItems={'center'}  border='1px solid white'  m={1}>
+         {MonthData.length > 0 ? <Box width={{sm:"40%",xs:'80%'}} height={{sm:'60vh',xs:'40vh'}} sx={{display:'flex',flexDirection:'column'}} alignItems={'center'}  border='1px solid white'  m={1}>
              <Typography variant='h6' m={3} textAlign={'center'}>Day-To-Day Expenses in Current Month </Typography>
               <LineChart pdata={MonthData} lable={'Monthly Expense'} lable2='' second={true}/>
-          </Box>
+          </Box>:<Typography variant='h6' m={3} textAlign={'center'}>Add expense to view data</Typography>}
         </Stack>
     </>
   )

@@ -20,7 +20,7 @@ function ResetPass() {
         // console.log('started');
         
             if(passwords.password === passwords.cfm_password){
-                const response = await  Axios.post('http://localhost:5000/resetPassword',{
+                const response = await  Axios.post('http://13.127.183.58:5000/resetPassword',{
                     uid,
                     pass:passwords.password
                 })

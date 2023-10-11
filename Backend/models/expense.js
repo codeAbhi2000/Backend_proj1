@@ -15,13 +15,13 @@ module.exports = class Expense{
             return db.execute('update expense set description = ?, date= ?, amount= ?,category_id=? where id = ? and uid =? ',[this.description,this.date,this.amount,this.cat_id,this.id,this.uid])
         }
         else{
-            return db.execute('insert into advance_expense_tracker.expense (description,date,amount,category_id,uid) values(?,?,?,?,?)',
+            return db.execute('insert into expense (description,date,amount,category_id,uid) values(?,?,?,?,?)',
             [this.description,this.date,this.amount,this.cat_id,this.uid])
         }
     }
 
     static getAllExpenses(id){
-        return db.execute('select e.id, e.description,e.date,e.amount,c.id as cat_id, c.name as cat_name from advance_expense_tracker.expense as e ,advance_expense_tracker.categories as c where c.id = e.category_id and e.uid = ? order by e.date',[id])
+        return db.execute('select e.id, e.description,e.date,e.amount,c.id as cat_id, c.name as cat_name from expense as e , categories as c where c.id = e.category_id and e.uid = ? order by e.date',[id])
     }
 
     static getCatExpenses(id){

@@ -49,7 +49,7 @@ function Budget() {
     const handleSubmit = (e)=>{
         e.preventDefault()
         makeJson()
-        Axios.post('http://localhost:5000/addBudget',{
+        Axios.post('http://13.127.183.58:5000/addBudget',{
             income:budget.income,
             budget:budget.budget,
             savings:budget.income-budget.budget,

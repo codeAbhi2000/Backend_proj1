@@ -60,7 +60,7 @@ function Navbar() {
         // console.log('payment started');
         e.preventDefault();
       
-        const response = await Axios.get(`http://localhost:5000/subscribeToMembership/${user.user.id}`,{
+        const response = await Axios.get(`http://13.127.183.58:5000/subscribeToMembership/${user.user.id}`,{
             headers:{
                 Authorization:localStorage.getItem('token')
             }
@@ -73,7 +73,7 @@ function Navbar() {
           order_id: response.data.order.id,
           handler: async (res) => {
             try {
-             const captureResponse = await Axios.post('http://localhost:5000/succesPurchase', {
+             const captureResponse = await Axios.post('http://13.127.183.58:5000/succesPurchase', {
                 order_id:response.data.order.id,
                 uid:user.user.id
              },{

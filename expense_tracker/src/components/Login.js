@@ -25,7 +25,7 @@ function Login() {
     const handleSubmit = async (e)=>{
         e.preventDefault()
         // console.log(loginData);
-        Axios.post('http://localhost:5000/login',loginData).then((res)=>{
+        Axios.post('http://13.127.183.58:5000/login',loginData).then((res)=>{
             // console.log(res.data);
             if(res.data.msg === 'Inavalid Credentials'){
                 setError(true)
