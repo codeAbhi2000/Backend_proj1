@@ -17,6 +17,22 @@ app.use(morgan('combined',{stream:streamOfLogs}))
 
 app.use(bodyParser.json({extended:false}))
 
+
+
+const reactPath = path.join(__dirname,'../expense_tracker/build')
+
+app.use(express.static(reactPath))
+
+app.get('/',(req,res)=>{
+    res.sendFile(
+        path.join(__dirname,"../expense_tracker/build/index.html"),(err)=>{
+            if(err){
+                res.status(500).send(err)
+            }
+        }
+    )
+})
+
 app.use(userRoutes)
 
 
