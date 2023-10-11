@@ -18,7 +18,7 @@ app.use(morgan('combined',{stream:streamOfLogs}))
 app.use(bodyParser.json({extended:false}))
 
 
-
+const __dirname = path.join("")
 const reactPath = path.join(__dirname,'../expense_tracker/build')
 
 app.use(express.static(reactPath))
