@@ -22,6 +22,8 @@ router.post('/getReportGivenRange',validator,userControler.postGetReportGivenRan
 
 router.post('/succesPurchase',validator,userControler.successFullPurchase)
 
+router.post('/downloadReport',validator,userControler.postDownloadReport)
+
 router.get('/subscribeToMembership/:id',validator,userControler.purchasePremium)
 
 router.get('/getAllUserDetails/:id',validator,userControler.getOverAllUserDeatails)

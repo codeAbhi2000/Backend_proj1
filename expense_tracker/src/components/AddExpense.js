@@ -1,5 +1,5 @@
-import { Box, Container, TextField, FormControl, Typography ,Button,MenuItem,Select,Stack} from '@mui/material'
-import React ,{useState} from 'react'
+import { Box, Container, TextField, FormControl, Typography, Button, MenuItem, Select, Stack } from '@mui/material'
+import React, { useState } from 'react'
 import Axios from 'axios'
 import { useContext } from 'react';
 import UserContext from '../context/userContext';
@@ -7,41 +7,41 @@ import UserContext from '../context/userContext';
 function AddExpense() {
     const user = useContext(UserContext)
     const [ExpenseData, setExpenseData] = useState({
-        description:'',
-        amount:null,
-        date:'',
-        cat_id:null,
-        
+        description: '',
+        amount: null,
+        date: '',
+        cat_id: null,
+
     })
 
-    const handleChange = (e)=>{
-        setExpenseData({...ExpenseData,[e.target.name]:e.target.value})
+    const handleChange = (e) => {
+        setExpenseData({ ...ExpenseData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault()
         // console.log(localStorage.getItem('token'));
         // console.log(ExpenseData);
-        Axios.post('http://13.127.183.58:5000/addExpense',{
-            description:ExpenseData.description,
-            date:ExpenseData.date,
-            amount:ExpenseData.amount,
-            uid:user.user.id ,
-            cat_id:ExpenseData.cat_id
-        },{
-            headers:{
+        Axios.post('http://localhost:5000/addExpense', {
+            description: ExpenseData.description,
+            date: ExpenseData.date,
+            amount: ExpenseData.amount,
+            uid: user.user.id,
+            cat_id: ExpenseData.cat_id
+        }, {
+            headers: {
                 Authorization: localStorage.getItem('token')
             }
-        }).then((res)=>{
+        }).then((res) => {
             alert(res.data.msg)
             setExpenseData({
-                description:'',
-                amount:null,
-                date:'',
-                cat_id:null
+                description: '',
+                amount: null,
+                date: '',
+                cat_id: null
             })
         }).catch(err => console.log(err))
-        user.updateUser() 
+        user.updateUser()
     }
     return (
         <Container
@@ -52,7 +52,7 @@ function AddExpense() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                mt:{sm:6,xs:0}
+                mt: { sm: 6, xs: 0 }
 
             }} >
             <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems='center' width={{ sm: 400, xs: 350 }} border='1px solid' borderColor={'secondary.main'} py={3}>
@@ -67,10 +67,10 @@ function AddExpense() {
                 }}>
                     <form onSubmit={handleSubmit}>
                         <Stack spacing={2}>
-                            <TextField variant='outlined' label="Description" name='description' color='secondary' type='text' value={ExpenseData.description} required onChange={handleChange}/>
-                            <TextField variant='outlined' label="Amount" type="number" name='amount' color='secondary' value={ExpenseData.amount} required onChange={handleChange}/>
+                            <TextField variant='outlined' label="Description" name='description' color='secondary' type='text' value={ExpenseData.description} required onChange={handleChange} />
+                            <TextField variant='outlined' label="Amount" type="number" name='amount' color='secondary' value={ExpenseData.amount} required onChange={handleChange} />
                             <label htmlFor="date">Date</label>
-                            <TextField variant='outlined' id='date' type="date" name='date' value={ExpenseData.date} color='secondary' required onChange={handleChange}/>
+                            <TextField variant='outlined' id='date' type="date" name='date' value={ExpenseData.date} color='secondary' required onChange={handleChange} />
                             <label htmlFor="demo-simple-select">Category</label>
                             <Select
                                 labelId="demo-simple-select-label"

@@ -64,4 +64,8 @@ module.exports = class User {
       return db.execute('update user set password = ? where id = ? ',[pass,id])
     }
 
+    static upDateDownload(id,url){
+      return db.execute('update user set downloads = ? where id = ?',[url,id])
+    }
+
 }

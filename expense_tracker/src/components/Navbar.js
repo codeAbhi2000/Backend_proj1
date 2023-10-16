@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Badge } from '@mui/material';
-import {Link ,useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import UserContext from '../context/userContext';
 import Axios from 'axios'
@@ -21,7 +21,7 @@ import Axios from 'axios'
 
 function Navbar() {
     const navigate = useNavigate()
-   
+
     const user = useContext(UserContext)
 
     // console.log(user.user);
@@ -36,7 +36,7 @@ function Navbar() {
         setAnchorElUser(event.currentTarget);
     };
 
-    const logOutUser = ()=>{
+    const logOutUser = () => {
         setAnchorElUser(null);
         localStorage.removeItem('user')
         localStorage.removeItem('token')
@@ -59,41 +59,43 @@ function Navbar() {
     const paymentHandler = async (e) => {
         // console.log('payment started');
         e.preventDefault();
-      
-        const response = await Axios.get(`http://13.127.183.58:5000/subscribeToMembership/${user.user.id}`,{
-            headers:{
-                Authorization:localStorage.getItem('token')
+
+        const response = await Axios.get(`http://localhost:5000/subscribeToMembership/${user.user.id}`, {
+            headers: {
+                Authorization: localStorage.getItem('token')
             }
         });
-        
+
         const options = {
-          key: response.data.key_id,
-          name: "Budgetbuddy",
-          description: "Track and analyse your expense",
-          order_id: response.data.order.id,
-          handler: async (res) => {
-            try {
-             const captureResponse = await Axios.post('http://13.127.183.58:5000/succesPurchase', {
-                order_id:response.data.order.id,
-                uid:user.user.id
-             },{
-                headers:{
-                    Authorization :localStorage.getItem('token')
+            key: response.data.key_id,
+            name: "Budgetbuddy",
+            description: "Track and analyse your expense",
+            order_id: response.data.order.id,
+            handler: async (res) => {
+                try
+                {
+                    const captureResponse = await Axios.post('http://localhost:5000/succesPurchase', {
+                        order_id: response.data.order.id,
+                        uid: user.user.id
+                    }, {
+                        headers: {
+                            Authorization: localStorage.getItem('token')
+                        }
+                    })
+                    console.log(captureResponse.data);
+                    alert(captureResponse.data.msg)
+                } catch (err)
+                {
+                    console.log(err);
                 }
-             })
-             console.log(captureResponse.data);
-             alert(captureResponse.data.msg)
-            } catch (err) {
-              console.log(err);
-            }
-          },
-          theme: {
-            color: "#686CFD",
-          },
+            },
+            theme: {
+                color: "#686CFD",
+            },
         };
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
-        };
+    };
 
     return (
         <AppBar position="static">
@@ -103,7 +105,7 @@ function Navbar() {
                         variant="h6"
                         noWrap
                         component="a"
-                      
+
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -146,23 +148,23 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            
-                                <MenuItem onClick={handleCloseNavMenu}>
+
+                            <MenuItem onClick={handleCloseNavMenu}>
                                 <Link to='/'><Typography textAlign="center">Home</Typography></Link>
-                                </MenuItem>
+                            </MenuItem>
 
-                                <MenuItem onClick={handleCloseNavMenu}>
+                            <MenuItem onClick={handleCloseNavMenu}>
                                 <Link to='/login'><Typography textAlign="center">Login</Typography></Link>
-                                </MenuItem>
-                                <MenuItem onClick={paymentHandler}>
-                                    Subcribe
-                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem onClick={paymentHandler}>
+                                Subcribe
+                            </MenuItem>
 
 
-                           
+
                         </Menu>
                     </Box>
-                    
+
                     <Typography
                         variant="h5"
                         noWrap
@@ -182,75 +184,75 @@ function Navbar() {
                         BudgetBuddy
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                       
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                               <Link to='/'>Home</Link>
-                            </Button>
-                            {!user.user.isLogin ?<Button
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                               <Link to='/login'>Login</Link>
-                            </Button>:<></>}
-                            {user.user.isLogin && !user.user.isPremiumUser ?<Button
-                                onClick={paymentHandler}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                              Subscribe
-                            </Button>:<></>}
-                        
+
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            <Link to='/'>Home</Link>
+                        </Button>
+                        {!user.user.isLogin ? <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            <Link to='/login'>Login</Link>
+                        </Button> : <></>}
+                        {user.user.isLogin && !user.user.isPremiumUser ? <Button
+                            onClick={paymentHandler}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Subscribe
+                        </Button> : <></>}
+
                     </Box>
                     {user.user.isLogin ?
-                    <Box sx={{ flexGrow: 0 }}>
+                        <Box sx={{ flexGrow: 0 }}>
 
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {user.user.isPremiumUser ?<Badge badgeContent='Prime' color='secondary'  anchorOrigin={{
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    {user.user.isPremiumUser ? <Badge badgeContent='Prime' color='secondary' anchorOrigin={{
                                         vertical: 'top',
                                         horizontal: 'left',
-                                }}>
-                                <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
-                                    {user.user.name}
-                                </Typography>
-                                </Badge>:
-                                 <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
-                                 {user.user.name}
-                             </Typography>}
-                                <Avatar alt="Remy Sharp" src="" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            
-                                <MenuItem  onClick={handleCloseUserMenu}>
+                                    }}>
+                                        <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                                            {user.user.name}
+                                        </Typography>
+                                    </Badge> :
+                                        <Typography component='span' color='white' mr={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                                            {user.user.name}
+                                        </Typography>}
+                                    <Avatar alt="Remy Sharp" src="" />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+
+                                <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">Profile</Typography>
                                 </MenuItem>
-                                <MenuItem  onClick={logOutUser}>
+                                <MenuItem onClick={logOutUser}>
                                     <Typography textAlign="center">Logout</Typography>
                                 </MenuItem>
                                 <MenuItem >
                                     <Link to='/userDash/home'><Typography textAlign="center">Dashbord</Typography></Link>
                                 </MenuItem>
-                           
-                        </Menu>
-                    </Box>:<></>}
+
+                            </Menu>
+                        </Box> : <></>}
                 </Toolbar>
             </Container>
         </AppBar>

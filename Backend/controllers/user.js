@@ -3,16 +3,53 @@ const Expense = require('../models/expense')
 const Limit = require('../models/set_limit')
 const Budget = require('../models/budget')
 const Purchase = require('../models/purchase')
+const Downloads = require('../models/downloads')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 const Razorpay = require('razorpay')
 const nodemailer = require('nodemailer');
 
+const AWS = require('aws-sdk')
 
 
 const myToken = "$moBhi$Love430"
 
+const uploadToS3 = async (data,fileName)=>{
+    // console.log(data);
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const buffer = await blob.arrayBuffer();
+    const bufferData = Buffer.from(buffer);
+
+    AWS.config.update({
+        accessKeyId: process.env.AKIAQPM7EMSWG57FYRYZ,
+        secretAccessKey: process.env.AWS_S3_ACCESS_SECRET_KEY,
+        
+      });
+
+    const s3 = new AWS.S3()
+    const params = {
+        Bucket: 'abhshekexpenseapp',
+        Key: fileName, 
+        Body: bufferData,
+        ContentType: 'application/pdf',
+        ACL: 'public-read', 
+    };
+
+    return new Promise(async (resolve, reject) => {
+        s3.upload(params, (err, data) => {
+            if (err) {
+              console.error('S3 upload error', err);
+              reject(err)
+            } else {
+            //   console.log('File uploaded to S3:', data.Location);
+              resolve(data.Location)
+              // You can access the S3 URL in the data.Location property
+            }
+          });
+            
+    })
+}
 
 
 exports.postSignUpUser = async (req, res, next) => {
@@ -333,6 +370,30 @@ exports.resetPassword = async(req,res)=>{
         console.log(error);
         res.status(500).json({
             msg:"Something went wrong"
+        })
+    }
+}
+
+exports.postDownloadReport =  async (req,res)=>{
+    const {uid} = req.body
+    // console.log('Request Body:', req.body);
+    // console.log('Request Headers:', req.headers);
+    const formData = req.files.pdfFile
+    // console.log(req.files);
+    // console.log(uid);
+    // const formData = req.files.pdfFile
+    //  console.log(formData.data);
+    const fileName = `expenseReport${uid}/${new Date().getTime()}.pdf`
+    try {
+        const fileUrl = await uploadToS3(formData.data,fileName)
+        // console.log(fileUrl);
+        const downlod = new Downloads(uid,fileUrl)
+        await downlod.save()
+        res.status(200).json({fileUrl ,msg:"successfully downloaded report"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg:'Something Went wrong'
         })
     }
 }
