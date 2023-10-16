@@ -10,10 +10,9 @@ function Landing() {
     const user = useContext(UserContext)
   useEffect(() => {
     if(localStorage.getItem('token')){
-      const logedUser = JSON.parse(localStorage.getItem('user'))
-      user.setuser({ isLogin:true, name: logedUser.name, id: logedUser.id })
+      user.upDateLocalUser()
     }
-  })
+  },[])
     return (
         <Container sx={{
            width: '100%', display: 'flex', height: '90vh', mt: 1, color: 'white', justifyContent: 'center', alignItems: 'center'

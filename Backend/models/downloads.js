@@ -10,4 +10,8 @@ module.exports = class Downloads{
     save(){
         return db.execute('insert into downloads (uid,link) values(?,?)',[this.uid,this.link])
     }
+
+    static getAllDownloads(uid){
+        return db.execute('select * from downloads where uid = ?',[uid])
+    }
 }

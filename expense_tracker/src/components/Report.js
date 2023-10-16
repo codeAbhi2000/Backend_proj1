@@ -104,11 +104,11 @@ function Report() {
             formData.append('uid', user.user.id);
         
             // Check if this contains the PDF file and user ID
-            console.log(formData.get('pdfFile'));
-            console.log(formData.get('uid'));
+            // console.log(formData.get('pdfFile'));
+            // console.log(formData.get('uid'));
 
-            //console.log(formData);
-            console.log(Object.fromEntries(formData.entries()))
+            // //console.log(formData);
+            // console.log(Object.fromEntries(formData.entries()))
             try
             {
 
@@ -154,7 +154,7 @@ function Report() {
                         Authorization: localStorage.getItem('token')
                     }
                 }).then(res => {
-                    console.log(res);
+                    // console.log(res);
                     setMonthData({
                         allExpenses: res.data.data[2],
                         total_expense: res.data.data[0],
@@ -175,7 +175,7 @@ function Report() {
                         Authorization: localStorage.getItem('token')
                     }
                 }).then(res => {
-                    console.log(res.data.data);
+                    // console.log(res.data.data);
                     setYearData({
                         month_expense: res.data.data[0],
                         bud_save_in: res.data.data[1],
@@ -209,7 +209,7 @@ function Report() {
                         }
                     })
                     .then(res => {
-                        console.log(res);
+                        // console.log(res);
                         setGivenRangeData({
                             allExpenses: res.data.data[0],
                             total_expense: res.data.data[1],

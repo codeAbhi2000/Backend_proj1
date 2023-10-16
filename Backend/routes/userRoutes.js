@@ -37,6 +37,7 @@ router.get('/getAllExpenses/:id',validator,userControler.getAllUserExpenses)
 router.get('/getCatExpense/:id',validator,userControler.getCatExpenses)
 
 router.get('/getBudgetLimit/:id',validator,userControler.getBudgetLimit)
-
+ 
+router.get('/getDownloadsList/:uid',userControler.getDownloadList)
 
 module.exports = router

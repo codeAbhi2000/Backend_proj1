@@ -16,6 +16,7 @@ import Report from './components/Report';
 import ErrorNotice from './components/ErrorNotice';
 import ForgotPass from './components/ForgotPass';
 import ResetPass from './components/ResetPass';
+import Downloads from './components/Downloads';
 
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='budgeting' element={<Budget/>}/>
             <Route path='expenseAnalyse' element={<Analyser/>}/>
             <Route path= 'report' element={<Report/>}/>
+            <Route path='downloads' element={<Downloads/>}/>
             <Route path='notice' element={<ErrorNotice value={'This is a premium Feature Please buy a subscription To use it'}/>}/>
            </Route>
         </Routes>

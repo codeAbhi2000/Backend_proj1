@@ -397,3 +397,22 @@ exports.postDownloadReport =  async (req,res)=>{
         })
     }
 }
+
+exports.getDownloadList = async (req,res)=>{
+    const uid = req.params.uid
+    try {
+        
+        const list = await Downloads.getAllDownloads(uid)
+        if(list){
+            res.json({
+                data:list[0]
+            })
+        }
+        // console.log(list);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg:'something went Wrong'
+        })
+    }
+}
