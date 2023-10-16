@@ -17,7 +17,7 @@ app.use(morgan('combined',{stream:streamOfLogs}))
 app.use(fileUpload())
 app.use(bodyParser.json({extended:false}))
 
-/*
+
 const _dirname = path.dirname("Backend_proj1")
 const reactPath = path.join(_dirname,'../expense_tracker/build')
 
@@ -32,7 +32,7 @@ app.get('/',(req,res)=>{
         }
     )
 })
-*/
+
 app.use(userRoutes)
 
 
