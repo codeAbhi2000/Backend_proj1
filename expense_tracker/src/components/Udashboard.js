@@ -42,7 +42,7 @@ function Udashboard() {
             </Badge>
           </Link>: <Link to='report' ><Tab label="Download Report" /></Link>}
           <Link to='downloads' ><Tab label="Your Downloads" /></Link>
-          <Link to='/login' ><Tab label="Learn Personal Finance" /></Link>
+          
         
         </Tabs>
       </Box>

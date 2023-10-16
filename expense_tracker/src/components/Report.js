@@ -223,7 +223,6 @@ function Report() {
     // console.log(Range.type);
     if (user.user.isPremiumUser)
     {
-
         return (
             <Box sx={{
                 display: 'flex',
