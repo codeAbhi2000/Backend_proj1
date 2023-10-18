@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper,TablePagination, Box, Typography } from '@mui/material'
+import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, TablePagination, Box, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { useContext } from 'react';
@@ -12,17 +12,17 @@ function Downloads() {
 
     const handlePageChange = (event, newPage) => {
         setpage(newPage)
-      }
-    
-      const handleRowPerPageChange = (e) => {
+    }
+
+    const handleRowPerPageChange = (e) => {
         setrowPerPage(+e.target.value)
         setpage(0)
-      }
+    }
     const getDownloadList = async () => {
         try
         {
 
-            const result = await Axios.get(`http://localhost:5000/getDownloadsList/${user.user.id}`)
+            const result = await Axios.get(`http://13.232.46.108:5000/getDownloadsList/${user.user.id}`)
             if (result)
             {
                 setDownloadList(result.data.data)
@@ -38,7 +38,7 @@ function Downloads() {
     }, [])
 
     return (
-        <Box  display={'flex'} alignItems={'center'} justifyContent={'center'}>
+        <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
             <Box width={{ sm: '80%', xs: '100%' }}>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: { sm: 300, xs: 300 } }} aria-label="simple table">

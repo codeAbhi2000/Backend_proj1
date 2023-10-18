@@ -89,20 +89,20 @@ function Report() {
             const imx = (pdfWidth - imgWidth * ratio);
             const imy = 40;
             pdf.addImage(imgData, 'PNG', imx, imy, imgWidth * ratio, imgHeight * ratio);
-        
+
             // Convert the PDF content to a Uint8Array
             const pdfContent = pdf.output('arraybuffer');
-        
+
             // Create a Blob from the Uint8Array
             const pdfBlob = new Blob([pdfContent], { type: 'application/pdf' });
-        
+
             // Create a File from the Blob
             const pdfFile = new File([pdfBlob], 'expense_report.pdf', { type: 'application/pdf' });
-        
+
             const formData = new FormData();
             formData.append('pdfFile', pdfFile);
             formData.append('uid', user.user.id);
-        
+
             // Check if this contains the PDF file and user ID
             // console.log(formData.get('pdfFile'));
             // console.log(formData.get('uid'));
@@ -112,16 +112,17 @@ function Report() {
             try
             {
 
-                const res = await Axios.post('http://localhost:5000/downloadReport', 
-                 formData,
-                 {
-                    headers: {
-                        Authorization: localStorage.getItem('token'),
-                       " Content-Type ": 'multipart/form-data',
-                    },
-                })
+                const res = await Axios.post('http://13.232.46.108:5000/downloadReport',
+                    formData,
+                    {
+                        headers: {
+                            Authorization: localStorage.getItem('token'),
+                            " Content-Type ": 'multipart/form-data',
+                        },
+                    })
                 console.log(res);
-                if(res.status === 200){
+                if (res.status === 200)
+                {
                     let a = document.createElement('a')
                     a.href = res.data.fileUrl;
                     // a.download()
@@ -145,7 +146,7 @@ function Report() {
         if (Range.type === 'this_month')
         {
             // console.log(`get ${date.getMonth() + 1} Month Report`);
-            Axios.post('http://localhost:5000/getMonthReport', {
+            Axios.post('http://13.232.46.108:5000/getMonthReport', {
                 month: date.getMonth() + 1,
                 uid: user.user.id
             },
@@ -166,7 +167,7 @@ function Report() {
         else if (Range.type === 'this_year')
         {
             // console.log(`get ${date.getFullYear()} year  Report`);
-            Axios.post('http://localhost:5000/getYearReport', {
+            Axios.post('http://13.232.46.108:5000/getYearReport', {
                 year: date.getFullYear(),
                 uid: user.user.id
             },
@@ -198,7 +199,7 @@ function Report() {
                 })
             } else
             {
-                Axios.post('http://localhost:5000/getReportGivenRange', {
+                Axios.post('http://13.232.46.108:5000/getReportGivenRange', {
                     start_date: Range.start_date,
                     end_date: Range.end_date,
                     uid: user.user.id

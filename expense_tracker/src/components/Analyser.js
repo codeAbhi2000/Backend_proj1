@@ -18,7 +18,7 @@ function Analyser() {
     const [CatData, setCatData] = useState([])
     const [LimitData, setLimitData] = useState([])
     const Category_wise_expense = () => {
-        Axios.get(`http://localhost:5000/getCatExpense/${user.user.id}`, {
+        Axios.get(`http://13.232.46.108:5000/getCatExpense/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -29,7 +29,7 @@ function Analyser() {
     }
 
     const getBudgetLimit = () => {
-        Axios.get(`http://localhost:5000/getBudgetLimit/${user.user.id}`, {
+        Axios.get(`http://13.232.46.108:5000/getBudgetLimit/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
 

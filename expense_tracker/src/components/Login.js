@@ -22,15 +22,16 @@ function Login() {
         setloginData({ ...loginData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = async (e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault()
         // console.log(loginData);
-        Axios.post('http://localhost:5000/login',{
-            email:loginData.email,
-            password:loginData.password
-        }).then((res)=>{
+        Axios.post('http://13.232.46.108:5000/login', {
+            email: loginData.email,
+            password: loginData.password
+        }).then((res) => {
             // console.log(res.data);
-            if(res.data.msg === 'Inavalid Credentials'){
+            if (res.data.msg === 'Inavalid Credentials')
+            {
                 setError(true)
                 alert(res.data.msg)
             } else

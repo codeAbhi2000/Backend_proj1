@@ -13,7 +13,7 @@ function HomeDash() {
   const [CatData, setCatData] = useState([])
   const [MonthData, setMonthData] = useState([])
   const Category_wise_expense = () => {
-    Axios.get(`http://localhost:5000/getCatExpense/${user.user.id}`, {
+    Axios.get(`http://13.232.46.108:5000/getCatExpense/${user.user.id}`, {
       headers: {
         Authorization: localStorage.getItem('token')
       }
@@ -26,7 +26,7 @@ function HomeDash() {
   const getMonthData = async () => {
     const d = new Date()
     //  console.log( d.getMonth() + 1);
-    const expense = await Axios.get(`http://localhost:5000/getAllExpenses/${user.user.id}`, {
+    const expense = await Axios.get(`http://13.232.46.108:5000/getAllExpenses/${user.user.id}`, {
       headers: {
         Authorization: localStorage.getItem('token')
       }

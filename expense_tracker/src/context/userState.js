@@ -17,7 +17,7 @@ const UserState = (props) => {
     })
 
     const updateUser = () => {
-        Axios.get(`http://localhost:5000/getAllUserDetails/${user.email}`, {
+        Axios.get(`http://13.232.46.108:5000/getAllUserDetails/${user.email}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
