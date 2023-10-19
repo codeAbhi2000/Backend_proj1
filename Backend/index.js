@@ -12,7 +12,9 @@ const app = express()
 const streamOfLogs = fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'})
 
 app.use(cors())
-app.use(helmet())
+app.use(helmet({
+    contentSecurityPolicy : false,
+}))
 app.use(morgan('combined',{stream:streamOfLogs}))
 app.use(fileUpload())
 app.use(bodyParser.json({extended:false}))

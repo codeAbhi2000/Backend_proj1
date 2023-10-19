@@ -52,7 +52,12 @@ function AllExpenses() {
       }
     })
     // console.log(expense.data.data);
-    setExpenses(expense.data.data)
+    if(expense){
+
+      setExpenses(expense.data.data)
+    }else{
+      alert("Something went wrong")
+    }
   }
 
   const handleChange = (e) => {

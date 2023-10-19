@@ -29,6 +29,7 @@ function Downloads() {
             }
         } catch (error)
         {
+            alert('Something went wrong')
             console.log(error);
         }
     }

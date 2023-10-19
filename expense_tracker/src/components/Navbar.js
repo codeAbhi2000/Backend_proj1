@@ -86,6 +86,7 @@ function Navbar() {
                     alert(captureResponse.data.msg)
                 } catch (err)
                 {
+                    alert('Spmething went wrong')
                     console.log(err);
                 }
             },

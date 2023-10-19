@@ -27,7 +27,7 @@ function SignUp() {
             }
             else
             {
-                alert('User Sign Up Successful')
+                alert(res.data.msg)
                 navigate('/login')
             }
         }).catch(err => console.log(err))
