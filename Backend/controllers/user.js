@@ -15,39 +15,41 @@ const AWS = require('aws-sdk')
 
 const myToken = "$moBhi$Love430"
 
-const uploadToS3 = async (data,fileName)=>{
+const uploadToS3 = async (data, fileName) => {
     // console.log(data);
     const blob = new Blob([data], { type: 'application/pdf' });
     const buffer = await blob.arrayBuffer();
     const bufferData = Buffer.from(buffer);
 
     AWS.config.update({
-        accessKeyId: process.env.AKIAQPM7EMSWG57FYRYZ,
+        accessKeyId: process.env.AWS_S3_ACCESS_KEY,
         secretAccessKey: process.env.AWS_S3_ACCESS_SECRET_KEY,
-        
-      });
+
+    });
 
     const s3 = new AWS.S3()
     const params = {
         Bucket: 'abhshekexpenseapp',
-        Key: fileName, 
+        Key: fileName,
         Body: bufferData,
         ContentType: 'application/pdf',
-        ACL: 'public-read', 
+        ACL: 'public-read',
     };
 
     return new Promise(async (resolve, reject) => {
         s3.upload(params, (err, data) => {
-            if (err) {
-              console.error('S3 upload error', err);
-              reject(err)
-            } else {
-            //   console.log('File uploaded to S3:', data.Location);
-              resolve(data.Location)
-              // You can access the S3 URL in the data.Location property
+            if (err)
+            {
+                console.error('S3 upload error', err);
+                reject(err)
+            } else
+            {
+                //   console.log('File uploaded to S3:', data.Location);
+                resolve(data.Location)
+                // You can access the S3 URL in the data.Location property
             }
-          });
-            
+        });
+
     })
 }
 
@@ -61,10 +63,11 @@ exports.postSignUpUser = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(pass, salt)
 
     // console.log(hashedPassword);
-    try {
-        
+    try
+    {
+
         const user = new User(name, email, hashedPassword)
-    
+
         user.save()
             .then(() => {
                 res.json({
@@ -76,9 +79,10 @@ exports.postSignUpUser = async (req, res, next) => {
                     msg: "User Already Exixst"
                 })
             })
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'something went wrong'
+            msg: 'something went wrong'
         })
     }
 
@@ -88,8 +92,9 @@ exports.postLoginUser = async (req, res, next) => {
 
     const password = req.body.password
     const email = req.body.email
-    try {
-        
+    try
+    {
+
         const userDetails = await User.getOverAllUserDeatails(email)
         // console.log(userDetails);
         User.findUserById(email)
@@ -116,17 +121,19 @@ exports.postLoginUser = async (req, res, next) => {
                     msg: 'Inavalid Credentials'
                 })
             })
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'Something went wrong'
+            msg: 'Something went wrong'
         })
     }
 }
 
 exports.getAllUserExpenses = (req, res) => {
     const uid = req.params.id
-    try {
-        
+    try
+    {
+
         Expense.getAllExpenses(uid)
             .then((data) => {
                 res.json({
@@ -135,45 +142,50 @@ exports.getAllUserExpenses = (req, res) => {
             }).catch(err => {
                 console.log(err)
             })
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'Something went wrong'
+            msg: 'Something went wrong'
         })
     }
 }
 
 exports.getCatExpenses = (req, res) => {
     const uid = req.params.id
-    try {
-        
+    try
+    {
+
         Expense.getCatExpenses(uid)
             .then((data) => {
                 res.json({
                     data: data[0]
                 })
             }).catch(err => console.log(err))
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'Something went wrong'
-        })   
+            msg: 'Something went wrong'
+        })
     }
 }
 
 
 exports.getBudgetLimit = (req, res) => {
     const uid = req.params.id
-    try {
-        
+    try
+    {
+
         Limit.getBudgetLimit(uid)
             .then((data) => {
                 res.json({
                     data: data[0]
                 })
             }).catch(err => console.log(err))
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'Something went wrong'
-        })   
+            msg: 'Something went wrong'
+        })
     }
 }
 
@@ -184,8 +196,9 @@ exports.postAddExpense = (req, res) => {
     const date = req.body.date;
     const uid = req.body.uid
     const cat_id = req.body.cat_id;
-    try {
-        
+    try
+    {
+
         const expense = new Expense(id, desc, date, amount, cat_id, uid)
         expense.save()
             .then(() => {
@@ -193,27 +206,30 @@ exports.postAddExpense = (req, res) => {
                     msg: 'Expense added successfully'
                 })
             }).catch(err => console.log(err))
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'Something went wrong'
-        })   
+            msg: 'Something went wrong'
+        })
     }
 }
 
 exports.getOverAllUserDeatails = (req, res) => {
     const id = req.params.id;
-    try {
-        
+    try
+    {
+
         User.getOverAllUserDeatails(id)
             .then((data) => {
                 res.json({
                     data: data
                 })
             }).catch(err => console.log(err))
-    } catch (error) {
+    } catch (error)
+    {
         res.status(500).json({
-            msg:'Something went wrong'
-        })   
+            msg: 'Something went wrong'
+        })
     }
 }
 
@@ -361,7 +377,7 @@ exports.forgotPassword = async (req, res) => {
     // console.log(user);
     if (user[0].length === 0)
     {
-       res.status(404).json({
+        res.status(404).json({
             msg: 'Email does not exists'
         })
     } else
@@ -377,9 +393,9 @@ exports.forgotPassword = async (req, res) => {
 
         const mailOptions = {
             from: 'abhishekvvet@gmail.com',
-            to:email,
+            to: email,
             subject: 'Your Password Reset Link',
-            html: `<a href="http://13.232.46.108:5000/resetPassword/${user[0][0].id}/${authToken}">click here</a> to reset your password`
+            html: `<a href="http://3.109.94.251:5000/resetPassword/${user[0][0].id}/${authToken}">click here</a> to reset your password`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -389,7 +405,7 @@ exports.forgotPassword = async (req, res) => {
             } else
             {
                 res.status(200).json({
-                    data:info
+                    data: info
                 })
             }
         });
@@ -397,31 +413,33 @@ exports.forgotPassword = async (req, res) => {
 
 }
 
-exports.resetPassword = async(req,res)=>{
-    const{ uid,pass }= req.body
+exports.resetPassword = async (req, res) => {
+    const { uid, pass } = req.body
 
-    console.log(uid,pass);
+    console.log(uid, pass);
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(pass, salt)
 
-    try {
-       const result =  await User.resetPassword(hashedPassword,uid)
-    //    console.log(result);
-      
-         res.status(200).json({
-            msg:"Your Password is Reset Successful"
-         })
-       
-    } catch (error) {
+    try
+    {
+        const result = await User.resetPassword(hashedPassword, uid)
+        //    console.log(result);
+
+        res.status(200).json({
+            msg: "Your Password is Reset Successful"
+        })
+
+    } catch (error)
+    {
         console.log(error);
         res.status(500).json({
-            msg:"Something went wrong"
+            msg: "Something went wrong"
         })
     }
 }
 
-exports.postDownloadReport =  async (req,res)=>{
-    const {uid} = req.body
+exports.postDownloadReport = async (req, res) => {
+    const { uid } = req.body
     // console.log('Request Body:', req.body);
     // console.log('Request Headers:', req.headers);
     const formData = req.files.pdfFile
@@ -430,35 +448,40 @@ exports.postDownloadReport =  async (req,res)=>{
     // const formData = req.files.pdfFile
     //  console.log(formData.data);
     const fileName = `expenseReport${uid}/${new Date().getTime()}.pdf`
-    try {
-        const fileUrl = await uploadToS3(formData.data,fileName)
+    try
+    {
+        const fileUrl = await uploadToS3(formData.data, fileName)
         // console.log(fileUrl);
-        const downlod = new Downloads(uid,fileUrl)
+        const downlod = new Downloads(uid, fileUrl)
         await downlod.save()
-        res.status(200).json({fileUrl ,msg:"successfully downloaded report"})
-    } catch (error) {
+        res.status(200).json({ fileUrl, msg: "successfully downloaded report" })
+    } catch (error)
+    {
         console.log(error);
         res.status(500).json({
-            msg:'Something Went wrong'
+            msg: 'Something Went wrong'
         })
     }
 }
 
-exports.getDownloadList = async (req,res)=>{
+exports.getDownloadList = async (req, res) => {
     const uid = req.params.uid
-    try {
-        
+    try
+    {
+
         const list = await Downloads.getAllDownloads(uid)
-        if(list){
+        if (list)
+        {
             res.json({
-                data:list[0]
+                data: list[0]
             })
         }
         // console.log(list);
-    } catch (error) {
+    } catch (error)
+    {
         console.log(error);
         res.status(500).json({
-            msg:'something went Wrong'
+            msg: 'something went Wrong'
         })
     }
 }

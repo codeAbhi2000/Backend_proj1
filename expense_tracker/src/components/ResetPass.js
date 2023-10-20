@@ -21,7 +21,7 @@ function ResetPass() {
 
         if (passwords.password === passwords.cfm_password)
         {
-            const response = await Axios.post('http://13.232.46.108:5000/resetPassword', {
+            const response = await Axios.post('http://3.109.94.251:5000/resetPassword', {
                 uid,
                 pass: passwords.password
             })

@@ -41,7 +41,7 @@ function Udashboard() {
               <Tab label="Download Report" />
             </Badge>
           </Link>: <Link to='report' ><Tab label="Download Report" /></Link>}
-          <Link to='downloads' ><Tab label="Your Downloads" /></Link>
+          {user.user.isPremiumUser ?<Link to='downloads' ><Tab label="Your Downloads" /></Link>:<></>}
           
         
         </Tabs>

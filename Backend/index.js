@@ -6,6 +6,9 @@ const fs = require('fs')
 const path = require('path')
 const morgan = require('morgan')
 const userRoutes = require('./routes/userRoutes')
+const expenseRoutes = require('./routes/expenseRoutes')
+const reportRoutes = require('./routes/reportRoutes')
+const budgetRoutes = require('./routes/budgetRoutes')
 const fileUpload = require('express-fileupload')
 const app = express()
 
@@ -35,7 +38,20 @@ app.get('/',(req,res)=>{
     )
 })
 
+app.get('/resetPassword/:userId/:token',(req,res)=>{
+    res.sendFile(
+        path.join(__dirname,"../expense_tracker/build/index.html"),(err)=>{
+            if(err){
+                res.status(500).send(err)
+            }
+        }
+    )
+})
+
+app.use(expenseRoutes)
 app.use(userRoutes)
+app.use(budgetRoutes)
+app.use(reportRoutes)
 
 
 app.listen(5000,()=>{

@@ -19,7 +19,7 @@ function SignUp() {
     const handleSubmit = (e) => {
         e.preventDefault()
         // console.log(signupData);
-        Axios.post('http://13.232.46.108:5000/signup', signupData).then((res) => {
+        Axios.post('http://3.109.94.251:5000/signup', signupData).then((res) => {
             console.log(res);
             if (res.data.msg === 'User Already Exixst')
             {

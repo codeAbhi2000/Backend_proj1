@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography, Backdrop } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import LineChart from './LineChart'
 import Axios from 'axios'
@@ -10,15 +10,24 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import UserContext from '../context/userContext';
 import Counter from './Counter';
+import GridLoader from "react-spinners/GridLoader";
 
 function Analyser() {
     const user = useContext(UserContext)
+    const [Looder, setLooder] = useState({
+        load: false,
+        open: false
+    })
     const navigate = useNavigate()
     const [ExpenseStatus, setStatus] = useState(true)
     const [CatData, setCatData] = useState([])
     const [LimitData, setLimitData] = useState([])
     const Category_wise_expense = () => {
-        Axios.get(`http://13.232.46.108:5000/getCatExpense/${user.user.id}`, {
+        setLooder({
+            load:true,
+            open:true
+        })
+        Axios.get(`http://3.109.94.251:5000/getCatExpense/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -29,7 +38,7 @@ function Analyser() {
     }
 
     const getBudgetLimit = () => {
-        Axios.get(`http://13.232.46.108:5000/getBudgetLimit/${user.user.id}`, {
+        Axios.get(`http://3.109.94.251:5000/getBudgetLimit/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
 
@@ -38,11 +47,19 @@ function Analyser() {
 
             setLimitData(res.data.data[0].cat_id_limit)
         }).catch(err => console.log(err))
+
+        setLooder({
+            load:false,
+            open:false
+        })
     }
 
     useEffect(() => {
+        
         Category_wise_expense()
         getBudgetLimit()
+
+        
         return () => {
             if (user.user.total_expense > user.user.budget)
             {
@@ -50,6 +67,7 @@ function Analyser() {
             }
 
         }
+       
         // react-hooks/exhaustive-deps
     }, [])
 
@@ -57,6 +75,10 @@ function Analyser() {
     {
         return (
             <Stack>
+                <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={Looder.open}>
+                    <GridLoader loading={Looder.load} color="#7a5af5" />
+                </Backdrop>
                 <Box width={"100%"} >
                     <Typography variant='h4' m={3} textAlign={'center'}>Overview Of Expenses</Typography>
                     {CatData.length > 0 && LimitData.length > 0 ? <Stack direction={{ sm: 'row', xs: 'column' }} spacing={{ sm: 1, xs: 2 }}>

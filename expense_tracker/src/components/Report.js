@@ -1,4 +1,4 @@
-import { Box, FormControl, Stack, TextField, Button, MenuItem, Select, Typography } from '@mui/material'
+import { Box, FormControl, Stack, TextField, Button, MenuItem, Select, Typography ,Backdrop} from '@mui/material'
 import React, { useState, useRef } from 'react'
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import MonthReport from './MonthReport';
 import GivenRangeReport from './GivenRangeReport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'
-
+import GridLoader from "react-spinners/GridLoader";
 
 function Report() {
     const date = new Date()
@@ -19,7 +19,10 @@ function Report() {
     const contentRef = useRef(null);
 
     const navigate = useNavigate()
-
+    const [Looder, setLooder] = useState({
+        load: false,
+        open: false
+    })
     const [ViewRepo, setViewRepo] = useState(false)
 
     const [MonthData, setMonthData] = useState({
@@ -74,6 +77,10 @@ function Report() {
     })
 
     const generateReport = () => {
+        setLooder({
+            load:true,
+            open:true
+        })
         const input = contentRef.current;
         const options = {
             backgroundColor: '#c1d113'
@@ -112,7 +119,7 @@ function Report() {
             try
             {
 
-                const res = await Axios.post('http://13.232.46.108:5000/downloadReport',
+                const res = await Axios.post('http://3.109.94.251:5000/downloadReport',
                     formData,
                     {
                         headers: {
@@ -133,7 +140,10 @@ function Report() {
                 console.log(error);
             }
         })
-
+        setLooder({
+            load:false,
+            open:false
+        })
     };
 
     const handleChange = (e) => {
@@ -146,7 +156,7 @@ function Report() {
         if (Range.type === 'this_month')
         {
             // console.log(`get ${date.getMonth() + 1} Month Report`);
-            Axios.post('http://13.232.46.108:5000/getMonthReport', {
+            Axios.post('http://3.109.94.251:5000/getMonthReport', {
                 month: date.getMonth() + 1,
                 uid: user.user.id
             },
@@ -167,7 +177,7 @@ function Report() {
         else if (Range.type === 'this_year')
         {
             // console.log(`get ${date.getFullYear()} year  Report`);
-            Axios.post('http://13.232.46.108:5000/getYearReport', {
+            Axios.post('http://3.109.94.251:5000/getYearReport', {
                 year: date.getFullYear(),
                 uid: user.user.id
             },
@@ -199,7 +209,7 @@ function Report() {
                 })
             } else
             {
-                Axios.post('http://13.232.46.108:5000/getReportGivenRange', {
+                Axios.post('http://3.109.94.251:5000/getReportGivenRange', {
                     start_date: Range.start_date,
                     end_date: Range.end_date,
                     uid: user.user.id
@@ -287,6 +297,10 @@ function Report() {
                     justifyContent: 'center',
                     p: 2
                 }} width={'90%'} ref={contentRef} >
+                    <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={Looder.open}>
+                        <GridLoader loading={Looder.load} color="#7a5af5" />
+                    </Backdrop>
                     <Typography variant='h4' textAlign={'center'} mb={3}>Your Expense Report</Typography>
                     {YearData.month_expense.length !== 0 ? <YearReport data={YearData} /> : <></>}
                     {MonthData.allExpenses.length !== 0 ? <MonthReport data={MonthData} /> : <></>}
@@ -301,7 +315,7 @@ function Report() {
     }
     else
     {
-        console.log(user.user.isPremiumUser);
+        // console.log(user.user.isPremiumUser);
         navigate('/userDash/notice')
         return null
     }

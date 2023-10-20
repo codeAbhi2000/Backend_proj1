@@ -1,17 +1,21 @@
-import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination, IconButton, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
+import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, Box, FormControl, InputLabel, Select, MenuItem, Stack, TextField, TablePagination, IconButton, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Backdrop } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import Axios from 'axios'
 import { useContext } from 'react';
 import UserContext from '../context/userContext';
 import EditIcon from '@mui/icons-material/Edit';
+import GridLoader from "react-spinners/GridLoader";
 
 
 function AllExpenses() {
 
   const user = useContext(UserContext)
   // console.log(user.user.id)
-
+  const [Looder, setLooder] = useState({
+      load:false,
+      open:false
+  })
   const date = new Date()
   const [Expenses, setExpenses] = useState([])
   const [page, setpage] = useState(0)
@@ -46,18 +50,29 @@ function AllExpenses() {
   })
 
   const getExpenses = async () => {
-    const expense = await Axios.get(`http://13.232.46.108:5000/getAllExpenses/${user.user.id}`, {
+    setLooder({
+      load:true,
+      open:true
+    })
+    const expense = await Axios.get(`http://3.109.94.251:5000/getAllExpenses/${user.user.id}`, {
       headers: {
         Authorization: localStorage.getItem('token')
       }
     })
     // console.log(expense.data.data);
-    if(expense){
+    if (expense)
+    {
 
       setExpenses(expense.data.data)
-    }else{
+    } else
+    {
       alert("Something went wrong")
     }
+
+    setLooder({
+      load:false,
+      open:false
+    })
   }
 
   const handleChange = (e) => {
@@ -76,7 +91,7 @@ function AllExpenses() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // console.log(EditData);
-    Axios.post('http://13.232.46.108:5000/addExpense', {
+    Axios.post('http://3.109.94.251:5000/addExpense', {
       id: EditData.id,
       description: EditData.description,
       date: EditData.date,
@@ -104,7 +119,9 @@ function AllExpenses() {
   // console.log(filterData);
 
   useEffect(() => {
+   
     getExpenses()
+    
   }, [])
 
   // console.log(Expenses);
@@ -143,7 +160,11 @@ function AllExpenses() {
           </Box>
         </Stack>
       </Box>
-      <Paper>
+      <Backdrop  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={Looder.open}>
+          <GridLoader loading={Looder.load} color="#7a5af5"/>
+      </Backdrop>
+      <Paper >
         <TableContainer >
           <Table sx={{ minWidth: { sm: 650, xs: 250 }, }}  >
             <TableHead stickyHeader>
@@ -203,7 +224,7 @@ function AllExpenses() {
                     <TableCell align="center">{e.cat_name}</TableCell>
                     <TableCell align="center"><IconButton onClick={() => clickedItemdata(e)}><EditIcon /></IconButton></TableCell>
                   </TableRow>
-                )) : <Typography variant='h5' textAlign={'center'}>No Expense Data </Typography>
+                )) : <Typography variant='h6' textAlign={'center'}>No Expense Data </Typography>
               }
             </TableBody>
           </Table>

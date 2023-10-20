@@ -26,9 +26,9 @@ function Landing() {
                     <Typography variant='p' display={{xs:'none',sm:'block'}}>
                         <b>BudgetBuddy </b>is your financial ally. This app helps you monitor spending, stay within budget, and make informed decisions, ultimately bringing clarity and control to your financial life. It serves as a powerful tool for individuals and households, offering a clear window into your financial habits and enabling you to make informed decisions. With BudgetBuddy, you can record and categorize your expenses, track income sources, and monitor your financial health over time. It's like having a trusted companion on your financial journey, guiding you towards a more secure and prosperous future.
                     </Typography>
-                    <Box m={3}>
+                   {!user.user.isLogin ? <Box m={3}>
                         <Button variant='contained' color='secondary' endIcon={<Send/>}><Link to='/login'>Get Started</Link></Button>
-                    </Box>
+                    </Box>:<></>}
                 </Box>
                 <Box width={{sm:'30%',xs:'100%'}} alignItems={'center'} justifyContent={'center'} display={'flex'} >
                     <img src={poster} alt="poster" width='80%' />
