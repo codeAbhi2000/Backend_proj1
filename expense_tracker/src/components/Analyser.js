@@ -24,10 +24,10 @@ function Analyser() {
     const [LimitData, setLimitData] = useState([])
     const Category_wise_expense = () => {
         setLooder({
-            load:true,
-            open:true
+            load: true,
+            open: true
         })
-        Axios.get(`http://3.109.94.251:5000/getCatExpense/${user.user.id}`, {
+        Axios.get(`http://13.232.225.193:5000/getCatExpense/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -38,7 +38,7 @@ function Analyser() {
     }
 
     const getBudgetLimit = () => {
-        Axios.get(`http://3.109.94.251:5000/getBudgetLimit/${user.user.id}`, {
+        Axios.get(`http://13.232.225.193:5000/getBudgetLimit/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
 
@@ -49,17 +49,17 @@ function Analyser() {
         }).catch(err => console.log(err))
 
         setLooder({
-            load:false,
-            open:false
+            load: false,
+            open: false
         })
     }
 
     useEffect(() => {
-        
+
         Category_wise_expense()
         getBudgetLimit()
 
-        
+
         return () => {
             if (user.user.total_expense > user.user.budget)
             {
@@ -67,7 +67,7 @@ function Analyser() {
             }
 
         }
-       
+
         // react-hooks/exhaustive-deps
     }, [])
 

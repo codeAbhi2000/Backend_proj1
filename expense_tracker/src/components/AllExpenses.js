@@ -13,8 +13,8 @@ function AllExpenses() {
   const user = useContext(UserContext)
   // console.log(user.user.id)
   const [Looder, setLooder] = useState({
-      load:false,
-      open:false
+    load: false,
+    open: false
   })
   const date = new Date()
   const [Expenses, setExpenses] = useState([])
@@ -51,10 +51,10 @@ function AllExpenses() {
 
   const getExpenses = async () => {
     setLooder({
-      load:true,
-      open:true
+      load: true,
+      open: true
     })
-    const expense = await Axios.get(`http://3.109.94.251:5000/getAllExpenses/${user.user.id}`, {
+    const expense = await Axios.get(`http://13.232.225.193:5000/getAllExpenses/${user.user.id}`, {
       headers: {
         Authorization: localStorage.getItem('token')
       }
@@ -70,8 +70,8 @@ function AllExpenses() {
     }
 
     setLooder({
-      load:false,
-      open:false
+      load: false,
+      open: false
     })
   }
 
@@ -91,7 +91,7 @@ function AllExpenses() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // console.log(EditData);
-    Axios.post('http://3.109.94.251:5000/addExpense', {
+    Axios.post('http://13.232.225.193:5000/addExpense', {
       id: EditData.id,
       description: EditData.description,
       date: EditData.date,
@@ -119,9 +119,9 @@ function AllExpenses() {
   // console.log(filterData);
 
   useEffect(() => {
-   
+
     getExpenses()
-    
+
   }, [])
 
   // console.log(Expenses);
@@ -160,9 +160,9 @@ function AllExpenses() {
           </Box>
         </Stack>
       </Box>
-      <Backdrop  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={Looder.open}>
-          <GridLoader loading={Looder.load} color="#7a5af5"/>
+        <GridLoader loading={Looder.load} color="#7a5af5" />
       </Backdrop>
       <Paper >
         <TableContainer >

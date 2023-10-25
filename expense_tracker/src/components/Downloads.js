@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, TablePagination, Box, Typography,Backdrop } from '@mui/material'
+import { Table, TableBody, TableCell, TableRow, TableContainer, TableHead, Paper, TablePagination, Box, Typography, Backdrop } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { useContext } from 'react';
@@ -26,25 +26,25 @@ function Downloads() {
     }
     const getDownloadList = async () => {
         setLooder({
-            load:true,
-            open:true
+            load: true,
+            open: true
         })
         try
         {
 
-            const result = await Axios.get(`http://3.109.94.251:5000/getDownloadsList/${user.user.id}`)
+            const result = await Axios.get(`http://13.232.225.193:5000/getDownloadsList/${user.user.id}`)
             if (result)
             {
                 setDownloadList(result.data.data)
             }
         } catch (error)
         {
-            
+
             console.log(error);
         }
         setLooder({
-            load:false,
-            open:false
+            load: false,
+            open: false
         })
     }
 
@@ -55,9 +55,9 @@ function Downloads() {
     return (
         <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                    open={Looder.open}>
-                    <GridLoader loading={Looder.load} color="#7a5af5" />
-                </Backdrop>
+                open={Looder.open}>
+                <GridLoader loading={Looder.load} color="#7a5af5" />
+            </Backdrop>
             <Box width={{ sm: '80%', xs: '100%' }} >
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: { sm: 300, xs: 300 } }} aria-label="simple table">

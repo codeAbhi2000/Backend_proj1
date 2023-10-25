@@ -16,7 +16,7 @@ function ForgotPass() {
         try
         {
 
-            const res = await Axios.post('http://3.109.94.251:5000/forgotPassword', {
+            const res = await Axios.post('http://13.232.225.193:5000/forgotPassword', {
                 email: ReseEmail
             })
 

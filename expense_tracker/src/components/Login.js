@@ -25,7 +25,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         // console.log(loginData);
-        Axios.post('http://3.109.94.251:5000/login', {
+        Axios.post('http://13.232.225.193:5000/login', {
             email: loginData.email,
             password: loginData.password
         }).then((res) => {

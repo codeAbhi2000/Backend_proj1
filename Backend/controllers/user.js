@@ -201,7 +201,7 @@ exports.forgotPassword = async (req, res) => {
             from: 'abhishekvvet@gmail.com',
             to: email,
             subject: 'Your Password Reset Link',
-            html: `<a href="http://3.109.94.251:5000/resetPassword/${user[0][0].id}/${authToken}">click here</a> to reset your password`
+            html: `<a href="http://13.232.225.193:5000/resetPassword/${user[0][0].id}/${authToken}">click here</a> to reset your password`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {

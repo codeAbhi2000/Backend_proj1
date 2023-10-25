@@ -60,7 +60,7 @@ function Navbar() {
         // console.log('payment started');
         e.preventDefault();
 
-        const response = await Axios.get(`http://3.109.94.251:5000/subscribeToMembership/${user.user.id}`, {
+        const response = await Axios.get(`http://13.232.225.193:5000/subscribeToMembership/${user.user.id}`, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -74,7 +74,7 @@ function Navbar() {
             handler: async (res) => {
                 try
                 {
-                    const captureResponse = await Axios.post('http://3.109.94.251:5000/succesPurchase', {
+                    const captureResponse = await Axios.post('http://13.232.225.193:5000/succesPurchase', {
                         order_id: response.data.order.id,
                         uid: user.user.id
                     }, {
@@ -154,12 +154,12 @@ function Navbar() {
                                 <Link to='/'><Typography textAlign="center">Home</Typography></Link>
                             </MenuItem>
 
-                            {!user.user.isLogin ?<MenuItem onClick={handleCloseNavMenu}>
+                            {!user.user.isLogin ? <MenuItem onClick={handleCloseNavMenu}>
                                 <Link to='/login'><Typography textAlign="center">Login</Typography></Link>
-                            </MenuItem>:<></>}
-                            {user.user.isLogin && !user.user.isPremiumUser ?<MenuItem onClick={paymentHandler}>
+                            </MenuItem> : <></>}
+                            {user.user.isLogin && !user.user.isPremiumUser ? <MenuItem onClick={paymentHandler}>
                                 Subcribe
-                            </MenuItem>:<></>}
+                            </MenuItem> : <></>}
 
 
 

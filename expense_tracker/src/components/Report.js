@@ -1,4 +1,4 @@
-import { Box, FormControl, Stack, TextField, Button, MenuItem, Select, Typography ,Backdrop} from '@mui/material'
+import { Box, FormControl, Stack, TextField, Button, MenuItem, Select, Typography, Backdrop } from '@mui/material'
 import React, { useState, useRef } from 'react'
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -78,8 +78,8 @@ function Report() {
 
     const generateReport = () => {
         setLooder({
-            load:true,
-            open:true
+            load: true,
+            open: true
         })
         const input = contentRef.current;
         const options = {
@@ -119,7 +119,7 @@ function Report() {
             try
             {
 
-                const res = await Axios.post('http://3.109.94.251:5000/downloadReport',
+                const res = await Axios.post('http://13.232.225.193:5000/downloadReport',
                     formData,
                     {
                         headers: {
@@ -141,8 +141,8 @@ function Report() {
             }
         })
         setLooder({
-            load:false,
-            open:false
+            load: false,
+            open: false
         })
     };
 
@@ -156,7 +156,7 @@ function Report() {
         if (Range.type === 'this_month')
         {
             // console.log(`get ${date.getMonth() + 1} Month Report`);
-            Axios.post('http://3.109.94.251:5000/getMonthReport', {
+            Axios.post('http://13.232.225.193:5000/getMonthReport', {
                 month: date.getMonth() + 1,
                 uid: user.user.id
             },
@@ -177,7 +177,7 @@ function Report() {
         else if (Range.type === 'this_year')
         {
             // console.log(`get ${date.getFullYear()} year  Report`);
-            Axios.post('http://3.109.94.251:5000/getYearReport', {
+            Axios.post('http://13.232.225.193:5000/getYearReport', {
                 year: date.getFullYear(),
                 uid: user.user.id
             },
@@ -209,7 +209,7 @@ function Report() {
                 })
             } else
             {
-                Axios.post('http://3.109.94.251:5000/getReportGivenRange', {
+                Axios.post('http://13.232.225.193:5000/getReportGivenRange', {
                     start_date: Range.start_date,
                     end_date: Range.end_date,
                     uid: user.user.id
