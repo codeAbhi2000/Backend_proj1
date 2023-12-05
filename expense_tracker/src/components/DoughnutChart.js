@@ -9,12 +9,12 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 function DoughnutChart({pdata}) {
   const data = {
     labels: pdata.map((d)=>{
-        return d.name
+        return d._id
     }),
     datasets: [
       {
         label: 'Category',
-        data: pdata.map((d)=> {return d.total_expense}),
+        data: pdata.map((d)=> {return d.totalExpense}),
         backgroundColor: ['red','blue','green','pink','yellow','orange'],
       }
     ]

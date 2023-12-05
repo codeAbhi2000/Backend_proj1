@@ -1,5 +1,254 @@
-const db = require('../utils/database')
+const mongoose = require("mongoose");
 
+const Schema = mongoose.Schema;
+
+const expenseSchema = new Schema({
+  description: {
+    type: String,
+    default: null,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  uid: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
+});
+
+expenseSchema.statics.getMonthReport = async function (month, id) {
+  try {
+    const monthStart = new Date(new Date().getFullYear(), month - 1, 1);
+    const monthEnd = new Date(new Date().getFullYear(), month, 1);
+
+    const allExpenses = await this.find({
+      uid: mongoose.Types.ObjectId.createFromHexString(id),
+      date: { $gte: monthStart, $lt: monthEnd },
+    });
+
+    const totalExpense = allExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0
+    );
+
+    const result = await this.aggregate([
+      {
+        $match: {
+          uid: mongoose.Types.ObjectId.createFromHexString(id),
+          date: { $gte: new Date(new Date().getFullYear(), month - 1, 1) },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          allExpenses: "$$ROOT",
+          categoryDetails: {
+            name: "$category", // Assuming "category" field holds the category name
+          },
+        },
+      },
+    ]);
+
+    // Extract the relevant fields from the result
+
+    const categoryExpenses = result.map((item) => ({
+      name: item.categoryDetails.name,
+      total_expense: item.allExpenses.amount,
+    }));
+
+    const totalBudget = await this.aggregate([
+      {
+        $match: {
+          uid: mongoose.Types.ObjectId.createFromHexString(id),
+          date: { $gte: monthStart, $lt: monthEnd },
+        },
+      },
+      {
+        $lookup: {
+          from: "budgets",
+          localField: "uid",
+          foreignField: "uid",
+          as: "budgetDetails",
+        },
+      },
+      {
+        $limit: 1, // Limit to one document for total budget calculation
+      },
+      {
+        $project: {
+          _id: 0,
+          total_budget: {
+            $ifNull: [
+              {
+                $sum: {
+                  $cond: [
+                    { $isArray: "$budgetDetails.budget" },
+                    "$budgetDetails.budget",
+                    0,
+                  ],
+                },
+              },
+              0,
+            ],
+          },
+          total_savings: {
+            $ifNull: [
+              {
+                $sum: {
+                  $cond: [
+                    { $isArray: "$budgetDetails.savings" },
+                    "$budgetDetails.savings",
+                    0,
+                  ],
+                },
+              },
+              0,
+            ],
+          },
+          total_income: {
+            $ifNull: [
+              {
+                $sum: {
+                  $cond: [
+                    { $isArray: "$budgetDetails.income" },
+                    "$budgetDetails.income",
+                    0,
+                  ],
+                },
+              },
+              0,
+            ],
+          },
+        },
+      },
+    ]);
+
+    return { allExpenses, totalExpense, categoryExpenses, totalBudget };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+expenseSchema.statics.getYearReport = async function (year, id) {
+  try {
+    const result = await this.aggregate([
+      {
+        $match: {
+          uid: mongoose.Types.ObjectId.createFromHexString(id),
+          date: {
+            $gte: new Date(`${year}-01-01`),
+            $lt: new Date(`${year + 1}-01-01`),
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          allExpenses: "$$ROOT",
+          categoryDetails: {
+            _id: "$category",
+            name: "$category", // Assuming "category" field holds the category name
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { month: { $month: "$allExpenses.date" } },
+          total_expense: { $sum: "$allExpenses.amount" },
+        },
+      },
+      {
+        $sort: { "_id.month": 1 },
+      },
+    ]);
+
+    const totalBudget = await this.aggregate([
+      {
+        $match: {
+          uid: mongoose.Types.ObjectId.createFromHexString(id),
+          date: {
+            $gte: new Date(`${year}-01-01`),
+            $lt: new Date(`${year + 1}-01-01`),
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "budgets",
+          localField: "uid",
+          foreignField: "uid",
+          as: "budgetDetails",
+        },
+      },
+      {
+        $unwind: "$budgetDetails", // Unwind the budgetDetails array
+      },
+      {
+        $limit: 1, // Limit to one budget document
+      },
+      {
+        $group: {
+          _id: { month: { $month: "$budgetDetails.date" } },
+          total_budget: { $sum: "$budgetDetails.budget" },
+          total_savings: { $sum: "$budgetDetails.savings" },
+          total_income: { $sum: "$budgetDetails.income" },
+        },
+      },
+      {
+        $sort: { "_id.month": 1 },
+      },
+    ]);
+
+    const categoryExpenses = await this.aggregate([
+      {
+        $match: {
+          uid: mongoose.Types.ObjectId.createFromHexString(id),
+          date: {
+            $gte: new Date(`${year}-01-01`),
+            $lt: new Date(`${year + 1}-01-01`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { month: { $month: "$date" }, category: "$category" },
+          total_expense: { $sum: "$amount" },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id.month",
+          categories: {
+            $push: {
+              category: "$_id.category",
+              total_expense: "$total_expense",
+            },
+          },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ]);
+
+    return { result, totalBudget, categoryExpenses };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = mongoose.model("Expense", expenseSchema);
+/*
 module.exports = class Expense{
     constructor(id,description,date,amount,cat_id,uid){
         this.id = id
@@ -186,3 +435,4 @@ module.exports = class Expense{
         }
     }
 }
+*/

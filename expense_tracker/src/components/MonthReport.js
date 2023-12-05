@@ -30,7 +30,7 @@ function MonthReport({ data }) {
                                     <TableCell align="center">{e.date.slice(0, 10).split('-').reverse().join("-")}</TableCell>
                                     <TableCell align="center">{e.amount}</TableCell>
                                     <TableCell align="center">{e.description}</TableCell>
-                                    <TableCell align="center">{e.cat_name}</TableCell>
+                                    <TableCell align="center">{e.category}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -47,10 +47,10 @@ function MonthReport({ data }) {
                 <Typography variant='h6'>Insights Of Expense</Typography>
                 <Box>
                     <Stack direction='row' spacing={{ xs: 2, sm: 2 }} useFlexGap flexWrap={'wrap'} alignItems='center' justifyContent='center' >
-                        <BasicCard title={'Total Expense'} value={data.total_expense[0].total_expense} />
+                        <BasicCard title={'Total Expense'} value={data.total_expense} />
                         <BasicCard title={'Total Budget'} value={data.savings_budget[0].total_budget} />
-                        <BasicCard title={'Savings'} value={data.savings_budget[0].savings} />
-                        <BasicCard title={'Income'} value={data.savings_budget[0].savings + +data.savings_budget[0].total_budget} />
+                        <BasicCard title={'Savings'} value={data.savings_budget[0].total_savings} />
+                        <BasicCard title={'Income'} value={data.savings_budget[0].total_income} />
                     </Stack>
                 </Box>
                 <Box sx={{ flexGrow: 1 }} mt={3} >
@@ -89,7 +89,7 @@ function MonthReport({ data }) {
                                         Transportation
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cat_distribution[2].total_expense}
+                                        Rs. {data.cat_distribution[2]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -102,7 +102,7 @@ function MonthReport({ data }) {
                                         Shopping
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cat_distribution[3].total_expense}
+                                        Rs. {data.cat_distribution[3]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -117,7 +117,7 @@ function MonthReport({ data }) {
                                         </Typography>
                                     </Box>
                                     <Typography>
-                                        Rs. {data.cat_distribution[4].total_expense}
+                                        Rs. {data.cat_distribution[4]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -132,7 +132,7 @@ function MonthReport({ data }) {
                                         </Typography>
                                     </Box>
                                     <Typography>
-                                        Rs. {data.cat_distribution[5].total_expense}
+                                        Rs. {data.cat_distribution[5]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>

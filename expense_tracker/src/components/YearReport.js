@@ -75,10 +75,10 @@ function YearReport({ data }) {
                 <Typography variant='h6'>Insights Of Expense</Typography>
                 <Box>
                     <Stack direction='row' spacing={{ xs: 2, sm: 2 }} useFlexGap flexWrap={'wrap'} alignItems='center' justifyContent='center' >
-                        <BasicCard title={'Total Expense'} value={data.overAll_data[0].y_total_expense} />
-                        <BasicCard title={'Total Budget'} value={data.overAll_data[0].y_total_budget} />
-                        <BasicCard title={'Savings'} value={data.overAll_data[0].y_total_savings} />
-                        <BasicCard title={'Income'} value={data.overAll_data[0].y_total_income} />
+                        <BasicCard title={'Total Expense'} value={data.month_expense[0]?.total_expense} />
+                        <BasicCard title={'Total Budget'} value={data.overAll_data[0]?.total_budget} />
+                        <BasicCard title={'Savings'} value={data.overAll_data[0]?.total_savings} />
+                        <BasicCard title={'Income'} value={data.overAll_data[0]?.total_income} />
                     </Stack>
                 </Box>
                 <Box sx={{ flexGrow: 1 }} mt={3}>
@@ -91,7 +91,7 @@ function YearReport({ data }) {
                                     Investments
                                 </Typography>
                                 <Typography>
-                                    Rs. {data.cata_wise_data[0].total_expense}
+                                    Rs. {data.cata_wise_data[0]?.categories[0]?.total_expense}
                                 </Typography>
                             </Stack>
 
@@ -104,7 +104,7 @@ function YearReport({ data }) {
                                         Bills&Utility
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[1].total_expense}
+                                        Rs. {data.cata_wise_data[0]?.categories[1]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -117,7 +117,7 @@ function YearReport({ data }) {
                                         Transportation
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[2].total_expense}
+                                         {data.cata_wise_data[0]?.categories[2]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -130,7 +130,7 @@ function YearReport({ data }) {
                                         Shopping
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[3].total_expense}
+                                        Rs. {data.cata_wise_data[0]?.categories[3]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -145,7 +145,7 @@ function YearReport({ data }) {
                                         </Typography>
                                     </Box>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[4].total_expense}
+                                        Rs. {data.cata_wise_data[0]?.categories[4]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -160,7 +160,7 @@ function YearReport({ data }) {
                                         </Typography>
                                     </Box>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[5].total_expense}
+                                        Rs. {data.cata_wise_data[0]?.categories[5]?.total_expense}
                                     </Typography>
                                 </Stack>
                             </Box>

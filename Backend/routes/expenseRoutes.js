@@ -7,6 +7,8 @@ const expenseController = require('../controllers/expense')
 
 router.post('/addExpense',validator,expenseController.postAddExpense)
 
+router.post('/editExpense',validator,expenseController.editExpense)
+
 router.get('/getAllExpenses/:id',validator,expenseController.getAllUserExpenses)
 
 router.get('/getCatExpense/:id',validator,expenseController.getCatExpenses)

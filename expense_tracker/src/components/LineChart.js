@@ -54,18 +54,25 @@ function LineChart({pdata,lable,lable2,pdata2,second}) {
     }
     grapgData = chartdata
   }else{
+    let mylabels = [];
+    let mydata = [];
+    for (let key in pdata2) {
+      if (pdata2.hasOwnProperty(key)) {
+        mylabels.push(key)
+        mydata.push(pdata2[key])
+      }
+    }
     const chartdata2 = {
-      labels :   pdata.map((d)=>{
-        return d.name
-    }),
+      labels :   mylabels
+    ,
       datasets:[{
           label:lable,
-          data:pdata.map((d)=> {return d.total_expense}),
+          data:pdata.map((d)=> {return d.totalExpense}),
           backgroundColor:["#fc036b"],
       },
       {
         label:lable2,
-        data:pdata2.map((d)=> {return d.climit}),
+        data:mydata,
         backgroundColor:["#3779b8"]
       }
     ]

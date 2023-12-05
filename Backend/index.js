@@ -10,19 +10,23 @@ const expenseRoutes = require('./routes/expenseRoutes')
 const reportRoutes = require('./routes/reportRoutes')
 const budgetRoutes = require('./routes/budgetRoutes')
 const fileUpload = require('express-fileupload')
+const mongoose = require('mongoose')
+require('dotenv').config
+
+
 const app = express()
 
-const streamOfLogs = fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'})
+// const streamOfLogs = fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'})
 
 app.use(cors())
 app.use(helmet({
     contentSecurityPolicy : false,
 }))
-app.use(morgan('combined',{stream:streamOfLogs}))
+// app.use(morgan('combined',{stream:streamOfLogs}))
 app.use(fileUpload())
 app.use(bodyParser.json({extended:false}))
 
-
+/*
 const _dirname = path.dirname("Backend_proj1")
 const reactPath = path.join(_dirname,'../expense_tracker/build')
 
@@ -47,6 +51,7 @@ app.get('/resetPassword/:userId/:token',(req,res)=>{
         }
     )
 })
+*/
 
 app.use(expenseRoutes)
 app.use(userRoutes)
@@ -54,6 +59,11 @@ app.use(budgetRoutes)
 app.use(reportRoutes)
 
 
-app.listen(5000,()=>{
-    console.log(`Server is Listening on Port number : ${5000}`);
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@demo.yxqptup.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority`).then(()=>{
+    console.log("connected to databse");
+    app.listen(5000,()=>{
+        console.log(`Server is Listening on Port number : ${5000}`);
+    })
+}).catch(err => {
+    console.log(err);
 })
