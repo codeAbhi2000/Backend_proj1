@@ -8,6 +8,26 @@ import Grrocery from '../assets/images/icons8-grocery-50.png'
 import Other from '../assets/images/icons8-cheque-50.png'
 import BasicCard from './Card';
 function YearReport({ data }) {
+    const cat_wise_expense = (() => {
+        const categoryOrder = [
+            'investment',
+            'bills_utilities',
+            'transportation',
+            'shopping',
+            'grocery',
+            'others'
+        ];
+    
+        // Create a new object with categories mapped to total_expense (or 0 if not present)
+        const resultObject = categoryOrder.reduce((acc, category) => {
+            const categoryData = data.cat_wise_data.find((e) => e.category === category);
+            const totalExpense = categoryData ? categoryData.total_expense : 0;
+            acc[category] = totalExpense;
+            return acc;
+        }, {});
+    
+        return resultObject;
+    })()
     const combinedArray = data.month_expense.map((item1) => {
         const item2 = data.bud_save_in.find((item2) => item2.month === item1.month);
 
@@ -91,7 +111,7 @@ function YearReport({ data }) {
                                     Investments
                                 </Typography>
                                 <Typography>
-                                    Rs. {data.cata_wise_data[0]?.categories[0]?.total_expense}
+                                    Rs. {cat_wise_expense.investment}
                                 </Typography>
                             </Stack>
 
@@ -104,7 +124,7 @@ function YearReport({ data }) {
                                         Bills&Utility
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[0]?.categories[1]?.total_expense}
+                                        Rs. {cat_wise_expense.bills_utilities}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -117,7 +137,7 @@ function YearReport({ data }) {
                                         Transportation
                                     </Typography>
                                     <Typography>
-                                         {data.cata_wise_data[0]?.categories[2]?.total_expense}
+                                        Rs. {cat_wise_expense.transportation}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -130,7 +150,7 @@ function YearReport({ data }) {
                                         Shopping
                                     </Typography>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[0]?.categories[3]?.total_expense}
+                                        Rs. {cat_wise_expense.shopping}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -145,7 +165,7 @@ function YearReport({ data }) {
                                         </Typography>
                                     </Box>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[0]?.categories[4]?.total_expense}
+                                        Rs. {cat_wise_expense.grocery}
                                     </Typography>
                                 </Stack>
                             </Box>
@@ -160,7 +180,7 @@ function YearReport({ data }) {
                                         </Typography>
                                     </Box>
                                     <Typography>
-                                        Rs. {data.cata_wise_data[0]?.categories[5]?.total_expense}
+                                        Rs. {cat_wise_expense.others}
                                     </Typography>
                                 </Stack>
                             </Box>

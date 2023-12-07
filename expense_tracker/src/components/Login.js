@@ -36,7 +36,7 @@ function Login() {
       password: loginData.password,
     })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         if (res.data.msg === "Inavalid Credentials") {
           setError(true);
           alert(res.data.msg);
@@ -49,24 +49,23 @@ function Login() {
 
           localStorage.setItem(
             "user",
-            JSON.stringify([
-              ...res.data.data[0],
-              ...res.data.data[1],
-              ...res.data.data[2],
-            ])
+            JSON.stringify({
+              ...res.data.data,
+             
+        })
           );
           localStorage.setItem("token", res.data.token);
           const logedUser = JSON.parse(localStorage.getItem("user"));
           // console.log(typeof(logedUser[0].name));
           user.setuser({
             isLogin: true,
-            isPremiumUser: logedUser[0].ispremiumuser,
-            name: logedUser[0].name,
-            id: logedUser[0].id,
-            email: logedUser[0].email,
-            budget: logedUser[2] ? logedUser[2].budget : 0,
-            total_expense: logedUser[1] ? logedUser[1].total_expense : 0,
-            income: logedUser[2] ? logedUser[2].income : 0,
+            isPremiumUser: logedUser.user.ispremiumuser,
+            name: logedUser.user.name,
+            id: logedUser.user.id,
+            email: logedUser.user.email,
+            budget: logedUser ? logedUser?.budget : 0,
+            total_expense: logedUser ? logedUser?.totalExpense : 0,
+            income: logedUser ? logedUser?.income : 0,
           });
           //  console.log(user.user);
           navigate("/userDash/home");

@@ -213,7 +213,7 @@ function Report() {
             month_expense: res.data.data.result,
             bud_save_in: res.data.data.totalBudget,
             overAll_data: res.data.data.totalBudget,
-            cata_wise_data: res.data.data.categoryExpenses,
+            cat_wise_data: res.data.data.categoryExpenses[0].categories,
           });
           console.log(YearData);
         })

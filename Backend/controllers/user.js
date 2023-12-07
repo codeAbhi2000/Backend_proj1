@@ -169,7 +169,7 @@ exports.forgotPassword = async (req, res) => {
       from: "abhishekvvet@gmail.com",
       to: email,
       subject: "Your Password Reset Link",
-      html: `<a href="http://localhost:3000/resetPassword/${user[0]._id}/${authToken}">click here</a> to reset your password`,
+      html: `<a href="https://bbexpense.netlify.app/resetPassword/${user[0]._id}/${authToken}">click here</a> to reset your password`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
