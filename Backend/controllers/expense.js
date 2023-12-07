@@ -48,7 +48,7 @@ exports.editExpense = (req, res) => {
     },
   })
     .then((result) => {
-        console.log(result);
+        // console.log(result);
       return res.status(200).json({
         msg: "Expense updated successfully",
       });
@@ -66,7 +66,7 @@ exports.getAllUserExpenses = (req, res) => {
   try {
     Expense.find({ uid: uid })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         res.json({
           data: data,
         });
@@ -102,7 +102,7 @@ exports.getCatExpenses = (req, res) => {
       },
     ])
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         return res.status(200).json({
           data: result,
         });

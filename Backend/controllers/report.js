@@ -47,7 +47,7 @@ exports.postGetMonthReport = async (req, res, next) => {
     try
     {
         const data = await Expense.getMonthReport(month, uid)
-         console.log(data);
+        //  console.log(data);
         res.json({
             data: data
         })
@@ -65,7 +65,7 @@ exports.postGetYearReport = async (req, res, next) => {
     try
     {
         const data = await Expense.getYearReport(year, uid)
-        console.log(data);
+        // console.log(data);
         res.json({
             data: data
         })

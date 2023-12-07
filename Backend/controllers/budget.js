@@ -49,7 +49,7 @@ exports.getBudgetLimit =  (req, res) => {
             date: { $gte: new Date(new Date().getFullYear(), currentMonth - 1, 1) },
           })
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 res.json({
                     data: data
                 })

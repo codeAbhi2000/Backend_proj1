@@ -50,7 +50,7 @@ exports.postLoginUser = async (req, res, next) => {
     // console.log(userDetails);
     User.findOne({email : email})
       .then(async (data) => {
-        console.log(data);
+        // console.log(data);
         const result = await bcrypt.compare(password, data.password);
         const authToken = jwt.sign(data.password, myToken);
         if (result) {
@@ -150,7 +150,7 @@ exports.forgotPassword = async (req, res) => {
   const email = req.body.email;
 
   const user = await User.find({email:email}).exec();
-  console.log(user);
+  // console.log(user);
   if (!user) {
     res.status(404).json({
       msg: "Email does not exists",
@@ -188,7 +188,7 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   const { uid, pass } = req.body;
 
-  console.log(uid, pass);
+  // console.log(uid, pass);
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(pass, salt);
 
