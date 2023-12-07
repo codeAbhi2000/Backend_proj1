@@ -15,17 +15,20 @@ const UserState = (props) => {
   });
 
   const updateUser = () => {
-    Axios.get(`http://localhost:5000/getAllUserDetails/${user.email}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
+    Axios.get(
+      `https://expense-tracker-nalq.onrender.com/getAllUserDetails/${user.email}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
       .then((res) => {
         // console.log(res.data.data);
         localStorage.setItem(
           "user",
           JSON.stringify({
-            ...res.data.data
+            ...res.data.data,
           })
         );
       })
@@ -42,7 +45,7 @@ const UserState = (props) => {
       budget: logedUser ? logedUser?.budget : 0,
       total_expense: logedUser ? logedUser?.totalExpense : 0,
       income: logedUser ? logedUser?.income : 0,
-    })
+    });
   };
 
   const upDateLocalUser = () => {
@@ -56,7 +59,7 @@ const UserState = (props) => {
       budget: logedUser ? logedUser?.budget : 0,
       total_expense: logedUser ? logedUser?.totalExpense : 0,
       income: logedUser ? logedUser?.income : 0,
-    })
+    });
   };
 
   return (

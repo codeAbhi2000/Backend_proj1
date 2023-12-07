@@ -27579,7 +27579,9 @@
               setuser: a,
               updateUser: function () {
                 Ln.get(
-                  "http://localhost:5000/getAllUserDetails/".concat(A.email),
+                  "https://expense-tracker-nalq.onrender.com/getAllUserDetails/".concat(
+                    A.email
+                  ),
                   { headers: { Authorization: localStorage.getItem("token") } }
                 )
                   .then(function (e) {
@@ -34762,7 +34764,7 @@
                             t.preventDefault(),
                             (e.next = 3),
                             Ln.get(
-                              "http://localhost:5000/subscribeToMembership/".concat(
+                              "https://expense-tracker-nalq.onrender.com/subscribeToMembership/".concat(
                                 n.user.id
                               ),
                               {
@@ -34792,7 +34794,7 @@
                                                 (e.prev = 0),
                                                 (e.next = 3),
                                                 Ln.post(
-                                                  "http://localhost:5000/succesPurchase",
+                                                  "https://expense-tracker-nalq.onrender.com/succesPurchase",
                                                   {
                                                     order_id: r.data.order.id,
                                                     uid: n.user.id,
@@ -38975,7 +38977,10 @@
                 children: (0, _n.jsx)("form", {
                   onSubmit: function (e) {
                     e.preventDefault(),
-                      Ln.post("http://localhost:5000/signup", o)
+                      Ln.post(
+                        "https://expense-tracker-nalq.onrender.com/signup",
+                        o
+                      )
                         .then(function (e) {
                           console.log(e),
                             "User Already Exixst" === e.data.msg
@@ -39056,10 +39061,13 @@
                       switch ((e.prev = e.next)) {
                         case 0:
                           r.preventDefault(),
-                            Ln.post("http://localhost:5000/login", {
-                              email: c.email,
-                              password: c.password,
-                            })
+                            Ln.post(
+                              "https://expense-tracker-nalq.onrender.com/login",
+                              {
+                                email: c.email,
+                                password: c.password,
+                              }
+                            )
                               .then(function (e) {
                                 if ("Inavalid Credentials" === e.data.msg)
                                   s(!0), alert(e.data.msg);
@@ -40410,7 +40418,7 @@
                           A({ load: !0, open: !0 }),
                           (e.next = 3),
                           Ln.get(
-                            "http://localhost:5000/getAllExpenses/".concat(
+                            "https://expense-tracker-nalq.onrender.com/getAllExpenses/".concat(
                               t.user.id
                             ),
                             {
@@ -40735,7 +40743,7 @@
                         onSubmit: function (e) {
                           e.preventDefault(),
                             Ln.post(
-                              "http://localhost:5000/addExpense",
+                              "https://expense-tracker-nalq.onrender.com/addExpense",
                               {
                                 id: S.id,
                                 description: S.description,
@@ -56014,7 +56022,7 @@
                           (n = new Date()),
                           (e.next = 3),
                           Ln.get(
-                            "http://localhost:5000/getAllExpenses/".concat(
+                            "https://expense-tracker-nalq.onrender.com/getAllExpenses/".concat(
                               t.user.id
                             ),
                             {
@@ -56049,9 +56057,14 @@
         return (
           (0, e.useEffect)(function () {
             A({ load: !0, open: !0 }),
-              Ln.get("http://localhost:5000/getCatExpense/".concat(t.user.id), {
-                headers: { Authorization: localStorage.getItem("token") },
-              })
+              Ln.get(
+                "https://expense-tracker-nalq.onrender.com/getCatExpense/".concat(
+                  t.user.id
+                ),
+                {
+                  headers: { Authorization: localStorage.getItem("token") },
+                }
+              )
                 .then(function (e) {
                   u(e.data.data);
                 })
@@ -56199,7 +56212,7 @@
                   onSubmit: function (e) {
                     e.preventDefault(),
                       Ln.post(
-                        "http://localhost:5000/addExpense",
+                        "https://expense-tracker-nalq.onrender.com/addExpense",
                         {
                           description: o.description,
                           date: o.date,
@@ -56763,7 +56776,7 @@
                             t = JSON.stringify(r);
                           })(),
                           Ln.post(
-                            "http://localhost:5000/addBudget",
+                            "https://expense-tracker-nalq.onrender.com/addBudget",
                             {
                               income: A.income,
                               budget: A.budget,
@@ -56989,7 +57002,9 @@
               return (
                 A({ load: !0, open: !0 }),
                 Ln.get(
-                  "http://localhost:5000/getCatExpense/".concat(t.user.id),
+                  "https://expense-tracker-nalq.onrender.com/getCatExpense/".concat(
+                    t.user.id
+                  ),
                   { headers: { Authorization: localStorage.getItem("token") } }
                 )
                   .then(function (e) {
@@ -56999,7 +57014,9 @@
                     return console.log(e);
                   }),
                 Ln.get(
-                  "http://localhost:5000/getBudgetLimit/".concat(t.user.id),
+                  "https://expense-tracker-nalq.onrender.com/getBudgetLimit/".concat(
+                    t.user.id
+                  ),
                   { headers: { Authorization: localStorage.getItem("token") } }
                 )
                   .then(function (e) {
@@ -80321,7 +80338,7 @@
                               f(!0),
                               "this_month" === Q.type
                                 ? Ln.post(
-                                    "http://localhost:5000/getMonthReport",
+                                    "https://expense-tracker-nalq.onrender.com/getMonthReport",
                                     { month: t.getMonth() + 1, uid: n.user.id },
                                     {
                                       headers: {
@@ -80343,7 +80360,7 @@
                                     })
                                 : "this_year" === Q.type
                                 ? Ln.post(
-                                    "http://localhost:5000/getYearReport",
+                                    "https://expense-tracker-nalq.onrender.com/getYearReport",
                                     { year: t.getFullYear(), uid: n.user.id },
                                     {
                                       headers: {
@@ -80374,7 +80391,7 @@
                                     end_date: "",
                                   }))
                                 : Ln.post(
-                                    "http://localhost:5000/getReportGivenRange",
+                                    "https://expense-tracker-nalq.onrender.com/getReportGivenRange",
                                     {
                                       start_date: Q.start_date,
                                       end_date: Q.end_date,
@@ -80630,7 +80647,7 @@
                                                     (e.prev = 16),
                                                     (e.next = 19),
                                                     Ln.post(
-                                                      "http://localhost:5000/downloadReport",
+                                                      "https://expense-tracker-nalq.onrender.com/downloadReport",
                                                       h,
                                                       {
                                                         headers: {
@@ -80783,9 +80800,12 @@
                             t.preventDefault(),
                             (e.prev = 1),
                             (e.next = 4),
-                            Ln.post("http://localhost:5000/forgotPassword", {
-                              email: r,
-                            })
+                            Ln.post(
+                              "https://expense-tracker-nalq.onrender.com/forgotPassword",
+                              {
+                                email: r,
+                              }
+                            )
                           );
                         case 4:
                           200 === e.sent.status && (o(""), l(!0)),
@@ -80918,10 +80938,13 @@
                         }
                         return (
                           (e.next = 4),
-                          Ln.post("http://localhost:5000/resetPassword", {
-                            uid: t,
-                            pass: A.password,
-                          })
+                          Ln.post(
+                            "https://expense-tracker-nalq.onrender.com/resetPassword",
+                            {
+                              uid: t,
+                              pass: A.password,
+                            }
+                          )
                         );
                       case 4:
                         200 === (i = e.sent).status &&
@@ -81033,7 +81056,7 @@
                             (e.prev = 1),
                             (e.next = 4),
                             Ln.get(
-                              "http://localhost:5000/getDownloadsList/".concat(
+                              "https://expense-tracker-nalq.onrender.com/getDownloadsList/".concat(
                                 m.user.id
                               )
                             )

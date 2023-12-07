@@ -16,7 +16,7 @@ import UserContext from "../context/userContext";
 
 function Budget() {
   const user = useContext(UserContext);
-  
+
   const [budget, setbudget] = useState({
     budget: null,
     income: null,
@@ -44,7 +44,7 @@ function Budget() {
     console.log(limits);
     console.log(budget);
     Axios.post(
-      "http://localhost:5000/addBudget",
+      "https://expense-tracker-nalq.onrender.com/addBudget",
       {
         income: budget.income,
         budget: budget.budget,

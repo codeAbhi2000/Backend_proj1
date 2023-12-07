@@ -22,9 +22,12 @@ function ForgotPass() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await Axios.post("http://localhost:5000/forgotPassword", {
-        email: ReseEmail,
-      });
+      const res = await Axios.post(
+        "https://expense-tracker-nalq.onrender.com/forgotPassword",
+        {
+          email: ReseEmail,
+        }
+      );
 
       if (res.status === 200) {
         setReseEmail("");

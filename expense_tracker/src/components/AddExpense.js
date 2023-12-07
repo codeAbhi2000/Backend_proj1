@@ -32,7 +32,7 @@ function AddExpense() {
     // console.log(localStorage.getItem('token'));
     // console.log(ExpenseData);
     Axios.post(
-      "http://localhost:5000/addExpense",
+      "https://expense-tracker-nalq.onrender.com/addExpense",
       {
         description: ExpenseData.description,
         date: ExpenseData.date,

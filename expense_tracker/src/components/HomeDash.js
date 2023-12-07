@@ -21,11 +21,14 @@ function HomeDash() {
       load: true,
       open: true,
     });
-    Axios.get(`http://localhost:5000/getCatExpense/${user.user.id}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
+    Axios.get(
+      `https://expense-tracker-nalq.onrender.com/getCatExpense/${user.user.id}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
       .then((res) => {
         console.log(res.data.data);
         setCatData(res.data.data);
@@ -41,7 +44,7 @@ function HomeDash() {
     const d = new Date();
     //  console.log( d.getMonth() + 1);
     const expense = await Axios.get(
-      `http://localhost:5000/getAllExpenses/${user.user.id}`,
+      `https://expense-tracker-nalq.onrender.com/getAllExpenses/${user.user.id}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),

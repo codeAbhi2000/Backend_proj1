@@ -42,7 +42,7 @@ function Downloads() {
     });
     try {
       const result = await Axios.get(
-        `http://localhost:5000/getDownloadsList/${user.user.id}`
+        `https://expense-tracker-nalq.onrender.com/getDownloadsList/${user.user.id}`
       );
       if (result) {
         setDownloadList(result.data.data);

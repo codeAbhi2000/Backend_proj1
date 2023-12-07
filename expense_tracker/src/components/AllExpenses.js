@@ -77,7 +77,7 @@ function AllExpenses() {
       open: true,
     });
     const expense = await Axios.get(
-      `http://localhost:5000/getAllExpenses/${user.user.id}`,
+      `https://expense-tracker-nalq.onrender.com/getAllExpenses/${user.user.id}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -114,7 +114,7 @@ function AllExpenses() {
     e.preventDefault();
     // console.log(EditData);
     Axios.post(
-      "http://localhost:5000/editExpense",
+      "https://expense-tracker-nalq.onrender.com/editExpense",
       {
         id: EditData.id,
         description: EditData.description,

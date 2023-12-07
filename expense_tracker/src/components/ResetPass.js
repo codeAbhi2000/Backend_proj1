@@ -28,10 +28,13 @@ function ResetPass() {
     // console.log('started');
 
     if (passwords.password === passwords.cfm_password) {
-      const response = await Axios.post("http://localhost:5000/resetPassword", {
-        uid,
-        pass: passwords.password,
-      });
+      const response = await Axios.post(
+        "https://expense-tracker-nalq.onrender.com/resetPassword",
+        {
+          uid,
+          pass: passwords.password,
+        }
+      );
 
       if (response.status === 200) {
         alert(response.data.msg);

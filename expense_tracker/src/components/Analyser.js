@@ -27,11 +27,14 @@ function Analyser() {
       load: true,
       open: true,
     });
-    Axios.get(`http://localhost:5000/getCatExpense/${user.user.id}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
+    Axios.get(
+      `https://expense-tracker-nalq.onrender.com/getCatExpense/${user.user.id}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
       .then((res) => {
         console.log(res);
         setCatData(res.data.data);
@@ -40,13 +43,16 @@ function Analyser() {
   };
 
   const getBudgetLimit = () => {
-    Axios.get(`http://localhost:5000/getBudgetLimit/${user.user.id}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
+    Axios.get(
+      `https://expense-tracker-nalq.onrender.com/getBudgetLimit/${user.user.id}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
       .then((res) => {
-        console.log("budgetlimits",res.data.data[0].cat_limits);
+        console.log("budgetlimits", res.data.data[0].cat_limits);
         setLimitData(res.data.data[0].cat_limits);
       })
       .catch((err) => console.log(err));

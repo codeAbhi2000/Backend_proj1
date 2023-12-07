@@ -136,7 +136,7 @@ function Report() {
       // console.log(Object.fromEntries(formData.entries()))
       try {
         const res = await Axios.post(
-          "http://localhost:5000/downloadReport",
+          "https://expense-tracker-nalq.onrender.com/downloadReport",
           formData,
           {
             headers: {
@@ -172,7 +172,7 @@ function Report() {
     if (Range.type === "this_month") {
       // console.log(`get ${date.getMonth() + 1} Month Report`);
       Axios.post(
-        "http://localhost:5000/getMonthReport",
+        "https://expense-tracker-nalq.onrender.com/getMonthReport",
         {
           month: date.getMonth() + 1,
           uid: user.user.id,
@@ -184,7 +184,7 @@ function Report() {
         }
       )
         .then((res) => {
-           console.log("month data",res);
+          console.log("month data", res);
           setMonthData({
             allExpenses: res.data.data.allExpenses,
             total_expense: res.data.data.totalExpense,
@@ -196,7 +196,7 @@ function Report() {
     } else if (Range.type === "this_year") {
       // console.log(`get ${date.getFullYear()} year  Report`);
       Axios.post(
-        "http://localhost:5000/getYearReport",
+        "https://expense-tracker-nalq.onrender.com/getYearReport",
         {
           year: date.getFullYear(),
           uid: user.user.id,
@@ -229,7 +229,7 @@ function Report() {
         });
       } else {
         Axios.post(
-          "http://localhost:5000/getReportGivenRange",
+          "https://expense-tracker-nalq.onrender.com/getReportGivenRange",
           {
             start_date: Range.start_date,
             end_date: Range.end_date,

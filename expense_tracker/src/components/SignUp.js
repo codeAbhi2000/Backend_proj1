@@ -27,7 +27,7 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(signupData);
-    Axios.post("http://localhost:5000/signup", signupData)
+    Axios.post("https://expense-tracker-nalq.onrender.com/signup", signupData)
       .then((res) => {
         console.log(res);
         if (res.data.msg === "User Already Exixst") {

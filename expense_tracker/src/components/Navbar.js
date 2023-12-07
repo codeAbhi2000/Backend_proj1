@@ -59,7 +59,7 @@ function Navbar() {
     e.preventDefault();
 
     const response = await Axios.get(
-      `http://localhost:5000/subscribeToMembership/${user.user.id}`,
+      `https://expense-tracker-nalq.onrender.com/subscribeToMembership/${user.user.id}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -75,7 +75,7 @@ function Navbar() {
       handler: async (res) => {
         try {
           const captureResponse = await Axios.post(
-            "http://localhost:5000/succesPurchase",
+            "https://expense-tracker-nalq.onrender.com/succesPurchase",
             {
               order_id: response.data.order.id,
               uid: user.user.id,
