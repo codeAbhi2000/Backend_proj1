@@ -17,14 +17,11 @@ function Landing() {
             .then((res) => {
               console.log(res.data);
               if (res.data.msg === "Inavalid Credentials") {
-                setError(true);
+                
                 alert(res.data.msg);
               } else {
                 console.log(res.data.data);
-                setloginData({
-                  email: "",
-                  password: "",
-                });
+               
       
                 localStorage.setItem(
                   "user",
@@ -72,7 +69,7 @@ function Landing() {
                     </Typography>
                    {!user.user.isLogin ? <Box m={3}>
                         <Button variant='contained' color='secondary' endIcon={<Send/>}><Link to='/login'>Get Started</Link></Button>
-                        <Button variant='contained' color='secondary' endIcon={<Send/>}>Try a demo</Button>
+                        <Button variant='contained' color='secondary' endIcon={<Send/>} onClick={handleDemoLogin}>Try a demo</Button>
                     </Box>:<></>}
                 </Box>
                 <Box width={{sm:'30%',xs:'100%'}} alignItems={'center'} justifyContent={'center'} display={'flex'} >
