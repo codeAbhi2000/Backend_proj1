@@ -5,9 +5,53 @@ import { Send } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useContext ,useEffect} from 'react';
 import UserContext from '../context/userContext';
+import Axios from 'axios'
 
 function Landing() {
     const user = useContext(UserContext)
+    const handleDemoLogin = ()=>{
+        Axios.post("https://expense-tracker-nalq.onrender.com/login", {
+            email: 'demo@gmail.com',
+            password: '456',
+          })
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.msg === "Inavalid Credentials") {
+                setError(true);
+                alert(res.data.msg);
+              } else {
+                console.log(res.data.data);
+                setloginData({
+                  email: "",
+                  password: "",
+                });
+      
+                localStorage.setItem(
+                  "user",
+                  JSON.stringify({
+                    ...res.data.data,
+                   
+              })
+                );
+                localStorage.setItem("token", res.data.token);
+                const logedUser = JSON.parse(localStorage.getItem("user"));
+                // console.log(typeof(logedUser[0].name));
+                user.setuser({
+                  isLogin: true,
+                  isPremiumUser: logedUser.user.ispremiumuser,
+                  name: logedUser.user.name,
+                  id: logedUser.user.id,
+                  email: logedUser.user.email,
+                  budget: logedUser ? logedUser?.budget : 0,
+                  total_expense: logedUser ? logedUser?.totalExpense : 0,
+                  income: logedUser ? logedUser?.income : 0,
+                });
+                //  console.log(user.user);
+                navigate("/userDash/home");
+              }
+            })
+            .catch((err) => console.log(err));
+    }
   useEffect(() => {
     if(localStorage.getItem('token')){
       user.upDateLocalUser()
@@ -28,6 +72,7 @@ function Landing() {
                     </Typography>
                    {!user.user.isLogin ? <Box m={3}>
                         <Button variant='contained' color='secondary' endIcon={<Send/>}><Link to='/login'>Get Started</Link></Button>
+                        <Button variant='contained' color='secondary' endIcon={<Send/>}>Try a demo</Button>
                     </Box>:<></>}
                 </Box>
                 <Box width={{sm:'30%',xs:'100%'}} alignItems={'center'} justifyContent={'center'} display={'flex'} >
