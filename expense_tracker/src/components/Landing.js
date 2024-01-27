@@ -5,10 +5,12 @@ import { Send } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useContext ,useEffect} from 'react';
 import UserContext from '../context/userContext';
+import { useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 
 function Landing() {
     const user = useContext(UserContext)
+    const navigate = useNavigate();
     const handleDemoLogin = ()=>{
         Axios.post("https://expense-tracker-nalq.onrender.com/login", {
             email: 'demo@gmail.com',
